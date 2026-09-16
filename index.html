@@ -1,0 +1,2409 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>TEMA 1: Literatura Clásica | 1º Bachillerato - IES Torre del Rei</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #FAF8F5;
+      --bg-card: #FFFFFF;
+      --bg-card-alt: #F4EFEB;
+      --primary: #1A365D;
+      --primary-light: #2563EB;
+      --terracotta: #B94723;
+      --terracotta-dark: #8C3215;
+      --gold: #B48A3C;
+      --gold-light: #DFCA8D;
+      --text-dark: #1E293B;
+      --text-muted: #64748B;
+      --border-color: rgba(180, 138, 60, 0.32);
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+    }
+    * { margin:0; padding:0; box-sizing: border-box; }
+    html, body {
+      width: 100vw; height: 100vh; max-width: 100vw; max-height: 100vh;
+      overflow: hidden; background-color: var(--bg-main); color: var(--text-dark);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      user-select: none; -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      content: ""; position: fixed; inset: 0; pointer-events: none;
+      border: 8px solid #EADBCC; z-index: 99;
+      box-shadow: inset 0 0 0 2px var(--gold);
+    }
+    .presentation-container {
+      width: 100vw; height: 100vh; position: relative; overflow: hidden;
+    }
+    .slide {
+      position: absolute; inset: 0; width: 100vw; height: 100vh;
+      padding: clamp(12px, 2.2vh, 22px) clamp(16px, 3vw, 40px) clamp(54px, 7.5vh, 70px) clamp(16px, 3vw, 40px);
+      display: flex; flex-direction: column; box-sizing: border-box;
+      opacity: 0; pointer-events: none; transform: scale(0.985);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      background-color: var(--bg-main);
+    }
+    .slide.active {
+      opacity: 1; pointer-events: auto; transform: scale(1); z-index: 5;
+    }
+    .slide-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      border-bottom: 2px solid var(--border-color); padding-bottom: clamp(4px, 0.8vh, 8px);
+      margin-bottom: clamp(6px, 1.2vh, 12px); flex-shrink: 0;
+    }
+    .header-left { display: flex; flex-direction: column; gap: 2px; }
+    .slide-category {
+      font-family: 'Cinzel', serif; font-size: clamp(0.66rem, 0.95vw, 0.82rem);
+      font-weight: 700; color: var(--terracotta); letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .slide-title {
+      font-family: 'Cinzel', serif; font-size: clamp(1.05rem, 1.9vw, 1.65rem);
+      color: var(--primary); font-weight: 700; line-height: 1.15;
+    }
+    .slide-number {
+      font-family: 'Cinzel', serif; font-size: clamp(0.75rem, 1vw, 0.92rem);
+      font-weight: 700; color: var(--gold);
+    }
+    .slide-body {
+      flex: 1; min-height: 0; display: flex; gap: clamp(10px, 1.8vw, 24px);
+      align-items: stretch; justify-content: stretch; overflow: hidden;
+    }
+    .pane-text {
+      flex: 1.25; min-height: 0; display: flex; flex-direction: column;
+      justify-content: space-evenly; gap: clamp(5px, 0.9vh, 10px);
+      font-size: clamp(0.76rem, 1.05vw, 0.98rem); line-height: 1.38;
+    }
+    .pane-text.full-width { flex: 1; }
+    .pane-image {
+      flex: 0.82; min-height: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; position: relative;
+      background: #FFFFFF; border-radius: 12px; padding: 6px;
+      border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);
+      cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .pane-image:hover {
+      transform: translateY(-2px); box-shadow: var(--shadow-md);
+    }
+    .pane-image img {
+      max-width: 100%; max-height: 100%; object-fit: contain;
+      border-radius: 8px;
+    }
+    .pane-image .zoom-hint {
+      position: absolute; bottom: 8px; right: 10px;
+      background: rgba(30, 41, 59, 0.78); color: #FFF;
+      font-size: 0.68rem; padding: 2px 8px; border-radius: 10px;
+      letter-spacing: 0.5px; backdrop-filter: blur(4px);
+    }
+    .card {
+      background: var(--bg-card); border-radius: 8px;
+      padding: clamp(6px, 1vh, 12px) clamp(10px, 1.3vw, 16px);
+      border-left: 4px solid var(--gold); box-shadow: var(--shadow-sm);
+      cursor: pointer; position: relative;
+      transition: transform 0.18s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.18s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px) scale(1.008);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    }
+    .card::after, .activity-task::after {
+      content: "⤢ Ampliar"; position: absolute; top: 6px; right: 8px;
+      font-size: 0.65rem; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600; color: var(--gold); background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--border-color); padding: 1px 6px; border-radius: 4px;
+      opacity: 0; transition: opacity 0.18s ease, transform 0.18s ease; pointer-events: none;
+    }
+    .card:hover::after, .activity-task:hover::after {
+      opacity: 0.95; transform: scale(1.02);
+    }
+    .card.terracotta { border-left-color: var(--terracotta); }
+    .card.blue { border-left-color: var(--primary); }
+    .card-title {
+      font-family: 'Cinzel', serif; font-weight: 700; color: var(--primary);
+      font-size: clamp(0.82rem, 1.15vw, 1.05rem); margin-bottom: 3px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .card p, .card li {
+      color: #334155; font-size: clamp(0.74rem, 1.02vw, 0.93rem); line-height: 1.36;
+    }
+    .card ul { list-style: none; padding-left: 0; }
+    .card ul li { position: relative; padding-left: 14px; margin-bottom: 2px; }
+    .card ul li::before {
+      content: "•"; position: absolute; left: 0; color: var(--gold);
+      font-weight: bold; font-size: 1.1rem; line-height: 1;
+    }
+    .card ul li.epic-sub {
+      position: relative; padding-left: 22px; margin-bottom: 3px;
+      color: #475569;
+    }
+    .card ul li.epic-sub::before {
+      content: "○" !important; position: absolute; left: 2px; color: var(--gold);
+      font-weight: bold; font-size: 0.88rem; line-height: 1.35;
+    }
+    .card ul.diamond-bullets li::before {
+      content: "❖" !important; position: absolute; left: 0; color: var(--accent-terracotta);
+      font-weight: bold; font-size: 0.82rem; line-height: 1.35;
+    }
+    .card ul.diamond-bullets li.epic-sub::before {
+      content: "○" !important; position: absolute; left: 4px; color: var(--accent-terracotta);
+      font-weight: bold; font-size: 0.85rem; line-height: 1.35;
+    }
+    .card strong { color: #0F172A; }
+    .badge-chip {
+      display: inline-block; background: #EEF2FF; color: #1E40AF;
+      font-size: 0.7rem; font-weight: 700; padding: 2px 7px; border-radius: 4px;
+      margin-right: 6px; font-family: 'Cinzel', serif;
+    }
+    .badge-chip.terra { background: #FFEDD5; color: #9A3412; }
+    .badge-chip.gold { background: #FEF3C7; color: #92400E; }
+    .grid-2 {
+      display: grid; grid-template-columns: 1fr 1fr; gap: clamp(6px, 1vw, 14px);
+      width: 100%; height: 100%; min-height: 0;
+    }
+    .grid-3 {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: clamp(6px, 0.9vw, 12px);
+      width: 100%; height: 100%; min-height: 0;
+    }
+    .comp-table-wrap {
+      width: 100%; height: 100%; min-height: 0; display: flex; flex-direction: column;
+      background: #FFFFFF; border-radius: 8px; border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm); overflow: hidden; cursor: pointer; position: relative;
+      transition: transform 0.18s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.18s ease;
+    }
+    .comp-table-wrap:hover {
+      transform: translateY(-2px) scale(1.005);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    }
+    .comp-table-wrap::after {
+      content: "⤢ Ampliar tabla"; position: absolute; top: 6px; right: 8px;
+      font-size: 0.65rem; font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600; color: #1E3A8A; background: rgba(255, 255, 255, 0.95);
+      border: 1px solid var(--border-color); padding: 1px 6px; border-radius: 4px;
+      opacity: 0; transition: opacity 0.18s ease; pointer-events: none; z-index: 5;
+    }
+    .comp-table-wrap:hover::after {
+      opacity: 0.95;
+    }
+    .comp-table {
+      width: 100%; height: 100%; border-collapse: collapse; font-size: clamp(0.64rem, 0.88vw, 0.8rem);
+    }
+    .comp-table th {
+      background: #1E3A8A; color: #FFFFFF; font-family: 'Cinzel', serif;
+      padding: clamp(3px, 0.5vh, 6px) clamp(6px, 0.8vw, 10px); text-align: left;
+      font-size: clamp(0.7rem, 0.95vw, 0.88rem);
+    }
+    .comp-table th:nth-child(2) { background: #B94723; }
+    .comp-table td {
+      padding: clamp(2px, 0.45vh, 4px) clamp(5px, 0.75vw, 9px); border-bottom: 1px solid #E2E8F0;
+      line-height: 1.22; vertical-align: middle;
+    }
+    .comp-table tr:nth-child(even) td { background-color: #F8FAFC; }
+    .comp-table tr:hover td { background-color: #FEF3C7; }
+    .comp-table .row-cat {
+      font-weight: 700; color: #1E293B; font-family: 'Cinzel', serif; white-space: nowrap;
+    }
+    .quote-hero {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      justify-content: center; text-align: center; padding: 0 clamp(16px, 5vw, 80px);
+      background: radial-gradient(circle at center, rgba(254, 243, 199, 0.45) 0%, transparent 70%);
+    }
+    .quote-icon {
+      font-family: 'Cinzel', serif; font-size: clamp(2.8rem, 5.5vh, 4.2rem);
+      color: var(--gold); line-height: 1; margin-bottom: clamp(6px, 1vh, 12px);
+    }
+    .quote-text {
+      font-family: 'Cinzel', serif; font-size: clamp(0.95rem, 2vh, 1.45rem);
+      line-height: 1.55; color: #1E293B; font-style: italic; max-width: 960px;
+    }
+    .quote-author {
+      margin-top: clamp(12px, 2.2vh, 22px); font-size: clamp(0.85rem, 1.25vw, 1.15rem);
+      font-weight: 700; color: var(--terracotta); letter-spacing: 1.5px;
+      text-transform: uppercase; font-family: 'Cinzel', serif;
+    }
+    .quote-start-btn {
+      margin-top: clamp(16px, 2.8vh, 30px); padding: 10px 28px;
+      background: linear-gradient(135deg, var(--primary) 0%, #1E40AF 100%);
+      color: white; border: none; border-radius: 30px; font-family: 'Cinzel', serif;
+      font-size: clamp(0.82rem, 1.15vw, 1rem); font-weight: 700; cursor: pointer;
+      box-shadow: 0 4px 14px rgba(30, 58, 138, 0.35); transition: transform 0.2s ease;
+    }
+    .quote-start-btn:hover { transform: scale(1.05); }
+    .cover-layout {
+      display: flex; height: 100%; align-items: center; justify-content: space-between;
+      gap: clamp(20px, 3vw, 50px);
+    }
+    .cover-info { flex: 1.1; display: flex; flex-direction: column; justify-content: center; }
+    .cover-tag {
+      font-family: 'Cinzel', serif; color: var(--terracotta); font-weight: 700;
+      letter-spacing: 2px; font-size: clamp(0.85rem, 1.2vw, 1.15rem); margin-bottom: 8px;
+    }
+    .cover-title {
+      font-family: 'Cinzel', serif; font-size: clamp(1.9rem, 4vw, 3.2rem);
+      color: var(--primary); font-weight: 900; line-height: 1.1; margin-bottom: 12px;
+    }
+    .cover-sub {
+      font-size: clamp(0.95rem, 1.5vw, 1.35rem); color: var(--gold); font-weight: 600;
+      margin-bottom: clamp(14px, 2.5vh, 26px); font-family: 'Cinzel', serif;
+    }
+    .cover-meta {
+      padding-top: 14px; border-top: 2px solid var(--border-color);
+      font-size: clamp(0.82rem, 1.05vw, 0.98rem); color: #475569; font-weight: 500;
+    }
+    .cover-img-pane { flex: 0.9; height: 80%; display: flex; align-items: center; justify-content: center; }
+    .cover-img-pane img {
+      max-height: 100%; max-width: 100%; object-fit: cover;
+      border-radius: 16px; box-shadow: var(--shadow-md); border: 2px solid var(--border-color);
+    }
+    .contents-slide-body {
+      flex: 1; min-height: 0; display: flex; gap: clamp(18px, 2.5vw, 36px);
+      align-items: stretch; justify-content: space-between;
+      padding: clamp(6px, 1.2vh, 16px) clamp(6px, 1vw, 16px);
+    }
+    .contents-col-container {
+      flex: 1.45; display: grid; grid-template-columns: 1fr 1fr;
+      gap: clamp(14px, 2vw, 28px); height: 100%; min-height: 0;
+    }
+    .contents-column {
+      display: flex; flex-direction: column; justify-content: flex-start;
+      gap: clamp(14px, 2.2vh, 26px);
+      background: #FFFFFF; border: 1px solid var(--border-color);
+      border-radius: 14px; padding: clamp(14px, 2.2vh, 24px) clamp(18px, 2vw, 28px);
+      box-shadow: var(--shadow-sm);
+    }
+    .contents-section {
+      display: flex; flex-direction: column; gap: clamp(6px, 1vh, 12px);
+    }
+    .c-head {
+      font-family: 'Cinzel', serif; font-size: clamp(1.02rem, 1.4vw, 1.25rem);
+      font-weight: 700; color: var(--primary); padding: 4px 8px; border-radius: 6px;
+      cursor: pointer; transition: all 0.15s ease; display: inline-block;
+      border-left: 4px solid var(--terracotta);
+      background: #FDF8F6;
+    }
+    .c-head:hover { background: #FEE2E2; color: var(--terracotta-dark); }
+    .c-lvl1 {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding-left: clamp(12px, 1.3vw, 20px);
+      font-size: clamp(0.88rem, 1.18vw, 1.05rem); font-weight: 600;
+      color: #1E293B; cursor: pointer; border-radius: 6px; padding-top: 3px; padding-bottom: 3px;
+      transition: all 0.15s ease; line-height: 1.38;
+    }
+    .c-lvl1::before {
+      content: "•"; color: var(--terracotta); font-weight: bold;
+      font-size: 1.35rem; line-height: 1; flex-shrink: 0;
+    }
+    .c-lvl1:hover { background: #FEF3C7; color: var(--terracotta-dark); }
+    .c-lvl2 {
+      display: flex; align-items: flex-start; gap: 8px;
+      padding-left: clamp(32px, 3.5vw, 48px);
+      font-size: clamp(0.82rem, 1.06vw, 0.98rem); font-weight: 500;
+      color: #475569; cursor: pointer; border-radius: 6px; padding-top: 2px; padding-bottom: 2px;
+      transition: all 0.15s ease; line-height: 1.38;
+    }
+    .c-lvl2::before {
+      content: "○"; color: var(--gold); font-weight: 700;
+      font-size: 0.95rem; line-height: 1.25; flex-shrink: 0;
+    }
+    .c-lvl2.dot-bullet::before {
+      content: "•"; color: var(--gold); font-size: 1.15rem; line-height: 1.1;
+    }
+    .c-lvl2:hover { background: #F1F5F9; color: var(--primary); font-weight: 600; }
+    .contents-bust-pane {
+      flex: 0.55; display: flex; align-items: center; justify-content: center;
+      position: relative; border-radius: 16px;
+      background: radial-gradient(ellipse at center, rgba(254, 243, 199, 0.45) 0%, rgba(250, 248, 245, 0) 72%);
+      padding: 6px;
+    }
+    .contents-bust-pane img {
+      max-height: 96%; max-width: 96%; object-fit: contain;
+      filter: drop-shadow(0 12px 24px rgba(0,0,0,0.16));
+      cursor: pointer; transition: transform 0.25s ease;
+    }
+    .contents-bust-pane img:hover {
+      transform: scale(1.03);
+    }
+    .contents-bust-pane .zoom-hint {
+      position: absolute; bottom: 8px; right: 12px;
+    }
+    .activity-container {
+      display: flex; width: 100%; height: 100%; min-height: 0; gap: clamp(14px, 2vw, 30px);
+      align-items: center;
+    }
+    .activity-img-box {
+      flex: 1.05; height: 100%; display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+    }
+    .activity-img-box img {
+      max-height: 94%; max-width: 94%; object-fit: contain;
+      filter: drop-shadow(0 6px 16px rgba(0,0,0,0.12)); border-radius: 12px;
+    }
+    .activity-info-box {
+      flex: 0.95; display: flex; flex-direction: column; justify-content: center;
+      gap: clamp(10px, 1.8vh, 18px);
+    }
+    .activity-badge {
+      display: inline-block; align-self: flex-start; background: #FEF3C7; color: #92400E;
+      font-family: 'Cinzel', serif; font-weight: 700; font-size: 0.85rem;
+      padding: 4px 14px; border-radius: 20px; border: 1px solid #FCD34D;
+    }
+    .activity-task {
+      background: #FFFFFF; border-radius: 10px; padding: clamp(12px, 2vh, 20px);
+      border-left: 5px solid var(--primary); box-shadow: var(--shadow-sm);
+      cursor: pointer; position: relative;
+      transition: transform 0.18s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.18s ease;
+    }
+    .activity-task:hover {
+      transform: translateY(-2px) scale(1.008);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    }
+    .activity-task h4 {
+      font-family: 'Cinzel', serif; color: var(--primary); font-size: clamp(0.95rem, 1.35vw, 1.2rem);
+      margin-bottom: 6px;
+    }
+    .activity-task p {
+      font-size: clamp(0.82rem, 1.1vw, 1rem); color: #334155; line-height: 1.45;
+    }
+    .video-frame {
+      width: 100%; height: 100%; max-height: 100%; display: flex;
+      align-items: center; justify-content: center; background: #000;
+      border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-md);
+    }
+    .video-frame video {
+      width: 100%; height: 100%; object-fit: contain;
+    }
+    .bottom-bar {
+      position: fixed; bottom: 8px; left: 8px; right: 8px; height: 48px;
+      background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+      border-top: 1px solid var(--border-color); display: flex;
+      align-items: center; justify-content: space-between; padding: 0 clamp(12px, 2vw, 24px);
+      z-index: 100; box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    }
+    .progress-track {
+      position: absolute; top: 0; left: 0; height: 3px; background: #E2E8F0; width: 100%;
+    }
+    .progress-bar {
+      height: 100%; background: linear-gradient(90deg, var(--gold) 0%, var(--terracotta) 50%, var(--primary) 100%);
+      width: 0%; transition: width 0.3s ease;
+    }
+    .nav-controls { display: flex; align-items: center; gap: 8px; }
+    .nav-btn {
+      background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155;
+      width: 36px; height: 36px; border-radius: 50%; display: flex;
+      align-items: center; justify-content: center; cursor: pointer;
+      font-weight: bold; font-size: 1.2rem; transition: all 0.15s ease;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background: var(--primary); color: white; border-color: var(--primary);
+      transform: scale(1.08);
+    }
+    .nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .indicator {
+      font-family: 'Cinzel', serif; font-size: clamp(0.72rem, 1.05vw, 0.92rem);
+      font-weight: 700; color: #475569; min-width: 120px; text-align: center;
+    }
+    .aux-controls { display: flex; align-items: center; gap: 8px; }
+    .aux-btn {
+      background: #FFFFFF; border: 1px solid #CBD5E1; color: #475569;
+      padding: 6px 12px; border-radius: 6px; font-size: 0.78rem; font-weight: 600;
+      cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all 0.15s ease;
+    }
+    .aux-btn:hover { background: #F8FAFC; color: var(--primary); border-color: var(--primary); }
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(5px); z-index: 200; display: none;
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .index-drawer {
+      background: #FFFFFF; width: 92%; max-width: 950px; max-height: 85vh;
+      border-radius: 12px; border: 2px solid var(--gold); display: flex;
+      flex-direction: column; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+    .drawer-header {
+      padding: 14px 20px; background: var(--primary); color: white;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .drawer-header h3 { font-family: 'Cinzel', serif; margin: 0; font-size: 1.25rem; }
+    .drawer-close { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+    .drawer-body {
+      padding: 16px 20px; overflow-y: auto; display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px;
+    }
+    .drawer-item {
+      padding: 8px 12px; border-radius: 6px; border: 1px solid #E2E8F0;
+      font-size: 0.82rem; color: #1E293B; cursor: pointer; display: flex;
+      align-items: center; gap: 8px; transition: background 0.15s ease;
+    }
+    .drawer-item:hover { background: #FEF3C7; border-color: var(--gold); }
+    .drawer-item.current { background: #DBEAFE; border-color: var(--primary); font-weight: bold; }
+    .drawer-item .item-num {
+      font-family: 'Cinzel', serif; font-weight: 700; color: var(--terracotta); min-width: 26px;
+    }
+    .lightbox-overlay {
+      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.88);
+      z-index: 300; display: none; align-items: center; justify-content: center;
+      cursor: zoom-out;
+    }
+    .lightbox-overlay.active { display: flex; }
+    .lightbox-img {
+      max-width: 92vw; max-height: 92vh; object-fit: contain;
+      border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      background-color: #FFFFFF;
+    }
+    .lightbox-close {
+      position: absolute; top: 20px; right: 24px; color: white;
+      font-size: 2.2rem; cursor: pointer; background: rgba(0,0,0,0.4);
+      width: 44px; height: 44px; border-radius: 50%; display: flex;
+      align-items: center; justify-content: center; line-height: 1;
+    }
+    /* CARD EXPANSION MODAL */
+    .card-modal-overlay {
+      position: fixed; inset: 0; background: rgba(15, 23, 42, 0.72);
+      backdrop-filter: blur(6px); z-index: 350; display: none;
+      align-items: center; justify-content: center; padding: clamp(16px, 3vw, 40px);
+      cursor: zoom-out;
+    }
+    .card-modal-overlay.active { display: flex; }
+    .card-modal-container {
+      background: #FFFFFF; border-radius: 16px;
+      max-width: 880px; width: 92%; max-height: 86vh;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      border: 2px solid var(--gold); border-left-width: 10px;
+      display: flex; flex-direction: column; position: relative;
+      overflow: hidden; cursor: default;
+      animation: popCardModal 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes popCardModal {
+      from { opacity: 0; transform: scale(0.92); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .card-modal-container.terracotta { border-left-color: var(--terracotta); }
+    .card-modal-container.blue { border-left-color: var(--primary); }
+    .card-modal-container.gold { border-left-color: var(--gold); }
+    .card-modal-close {
+      position: absolute; top: 12px; right: 14px; width: 36px; height: 36px;
+      border-radius: 50%; background: #F1F5F9; border: 1px solid #CBD5E1;
+      color: #334155; font-size: 1.3rem; font-weight: bold; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.15s ease; z-index: 10; line-height: 1;
+    }
+    .card-modal-close:hover {
+      background: var(--terracotta); color: white; border-color: var(--terracotta);
+      transform: scale(1.08);
+    }
+    .card-modal-content {
+      padding: clamp(24px, 4vh, 42px) clamp(24px, 3.5vw, 46px);
+      overflow-y: auto; font-size: clamp(1rem, 1.38vw, 1.28rem);
+      line-height: 1.6; color: #1E293B;
+    }
+    .card-modal-content .card-title,
+    .card-modal-content h4 {
+      font-family: 'Cinzel', serif; font-size: clamp(1.35rem, 2.1vw, 1.85rem);
+      color: var(--primary); margin-bottom: 16px; font-weight: 700;
+      border-bottom: 2px solid var(--border-color); padding-bottom: 8px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .card-modal-content p {
+      font-size: clamp(1rem, 1.38vw, 1.28rem); line-height: 1.65; margin-bottom: 14px;
+      color: #334155;
+    }
+    .card-modal-content ul {
+      list-style: none; padding-left: 0; margin-top: 10px; margin-bottom: 14px;
+    }
+    .card-modal-content ul li {
+      position: relative; padding-left: 28px; margin-bottom: 10px;
+      font-size: clamp(0.98rem, 1.32vw, 1.22rem); line-height: 1.6;
+    }
+    .card-modal-content ul li::before {
+      content: "•"; position: absolute; left: 6px; color: var(--gold);
+      font-weight: bold; font-size: 1.6rem; line-height: 1;
+    }
+    .card-modal-content .badge-chip {
+      font-size: 0.85rem; padding: 4px 10px; margin-right: 8px;
+    }
+    .card-modal-content .comp-table-wrap {
+      border: none; box-shadow: none; cursor: default;
+    }
+    .card-modal-content .comp-table-wrap:hover {
+      transform: none; box-shadow: none;
+    }
+    .card-modal-content .comp-table-wrap::after,
+    .card-modal-content .card::after,
+    .card-modal-content .activity-task::after {
+      display: none !important;
+    }
+    .card-modal-content .comp-table {
+      font-size: clamp(0.88rem, 1.15vw, 1.05rem);
+    }
+    .card-modal-content .comp-table th {
+      padding: 10px 14px; font-size: clamp(0.92rem, 1.2vw, 1.1rem);
+    }
+    .card-modal-content .comp-table td {
+      padding: 8px 12px; line-height: 1.45;
+    }
+    .card-modal-footer {
+      padding: 8px 20px; background: #F8FAFC; border-top: 1px solid #E2E8F0;
+      text-align: center; font-size: 0.82rem; color: #64748B; font-family: 'Cinzel', serif;
+      letter-spacing: 0.5px;
+    }
+    @media (max-width: 900px) {
+      .slide-body { flex-direction: column; }
+      .pane-text { flex: 1.3; }
+      .pane-image { flex: 0.7; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .cover-layout { flex-direction: column-reverse; text-align: center; }
+      .cover-img-pane { height: 40%; }
+      .activity-container { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="presentation-container" id="presentationContainer">
+
+    <!-- SLIDE 0: Cita Literaria Inicial -->
+    <section class="slide active" data-index="0" data-title="Cita Literaria Inicial">
+      <div class="quote-hero">
+        <div class="quote-icon">❝</div>
+        <div class="quote-text">«Canta, Diosa, la cólera de Aquiles el Pelida, la que, funesta, trajo dolor innumerable a los aqueos y sepultó en el Hades tantas fieras almas de héroes, a quienes hizo presa de perros y de todas las aves —la voluntad de Zeus se cumplía— a partir del instante en que por vez primera se enemistaron disputando el Atrida, rey de hombres, y Aquiles el divino...»</div>
+        <div class="quote-author">— Homero, <em>Ilíada</em> (Canto I)</div>
+        <button class="quote-start-btn" onclick="nextSlide()">Comenzar Presentación →</button>
+      </div>
+    </section>
+
+    <!-- SLIDE 1: Portada -->
+    <section class="slide" data-index="1" data-title="Portada">
+      <div class="cover-layout">
+        <div class="cover-info">
+          <div class="cover-tag">LITERATURA UNIVERSAL • 1º BACHILLERATO</div>
+          <h1 class="cover-title">TEMA 1.<br>LITERATURA CLÁSICA</h1>
+          <div class="cover-sub">Grecia y Roma: Cuna y Esplendor de Occidente</div>
+          <div class="cover-meta">
+            <strong>IES TORRE DEL REI</strong> &nbsp;|&nbsp; <strong>PROF. NURIA RIBÉS</strong>
+          </div>
+        </div>
+        <div class="cover-img-pane">
+          <img src="presentacion_recursos/portada_templo.jpg" alt="Partenón de Atenas" onclick="openLightbox(this.src)">
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: Contenidos -->
+    <section class="slide" data-index="2" data-title="Contenidos">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">Sumario</span>
+          <h2 class="slide-title">CONTENIDOS</h2>
+        </div>
+        <span class="slide-number">02 / 44</span>
+      </div>
+      <div class="contents-slide-body">
+        <div class="contents-col-container">
+          <!-- Columna Grecia -->
+          <div class="contents-column">
+            <div class="contents-section">
+              <div class="c-head" onclick="goToSlide(4)">1.1 Contexto histórico (Grecia)</div>
+            </div>
+            <div class="contents-section">
+              <div class="c-head" onclick="goToSlide(9)">1.2 Grecia</div>
+              <div class="c-lvl1" onclick="goToSlide(9)">La poesía épica griega</div>
+              <div class="c-lvl2" onclick="goToSlide(11)">Homero: La <em>Ilíada</em> y la <em>Odisea</em></div>
+              <div class="c-lvl1" onclick="goToSlide(19)">La poesía lírica griega. Safo de Lesbos</div>
+              <div class="c-lvl1" onclick="goToSlide(21)">El teatro griego. Orígenes</div>
+              <div class="c-lvl2 dot-bullet" onclick="goToSlide(25)">La tragedia y sus autores: Esquilo, Sófocles, Eurípides</div>
+              <div class="c-lvl1" onclick="goToSlide(29)">La prosa griega</div>
+            </div>
+          </div>
+          <!-- Columna Roma -->
+          <div class="contents-column">
+            <div class="contents-section">
+              <div class="c-head" onclick="goToSlide(32)">1.3 Contexto histórico (Roma)</div>
+            </div>
+            <div class="contents-section">
+              <div class="c-head" onclick="goToSlide(34)">1.4 Roma</div>
+              <div class="c-lvl1" onclick="goToSlide(34)">La poesía épica romana</div>
+              <div class="c-lvl2" onclick="goToSlide(35)">Virgilio: La <em>Eneida</em></div>
+              <div class="c-lvl1" onclick="goToSlide(37)">La poesía lírica. Ovidio</div>
+              <div class="c-lvl1" onclick="goToSlide(41)">El teatro latino</div>
+              <div class="c-lvl2" onclick="goToSlide(41)">Comedia: Plauto, Terencio</div>
+              <div class="c-lvl2" onclick="goToSlide(42)">Tragedia: Séneca</div>
+              <div class="c-lvl1" onclick="goToSlide(43)">La prosa latina.</div>
+              <div class="c-lvl2" onclick="goToSlide(43)">Historia</div>
+            </div>
+          </div>
+        </div>
+        <!-- Busto de Homero -->
+        <div class="contents-bust-pane" onclick="openLightbox('presentacion_recursos/busto_homero_transparente.png')">
+          <img src="presentacion_recursos/busto_homero_transparente.png" alt="Busto de Homero">
+          <span class="zoom-hint">🔍 Ampliar</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: Comparativa Literatura Antigua vs Clásica -->
+    <section class="slide" data-index="3" data-title="Literatura Antigua vs Clásica">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">Fundamentos</span>
+          <h2 class="slide-title">LITERATURA ANTIGUA ➔ LITERATURA CLÁSICA</h2>
+        </div>
+        <span class="slide-number">03 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="comp-table-wrap">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th style="width: 50%;">LITERATURA ANTIGUA</th>
+                <th style="width: 50%;">LITERATURA CLÁSICA</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>La <strong>naturaleza</strong> se explica a partir de <strong>cosmogonías</strong>, que relatan la creación y la destrucción del mundo.</td>
+                <td>La <strong>naturaleza</strong> se explica a partir de <strong>mitos</strong>, relatos fabulosos que dan cuenta del origen de las cosas.</td>
+              </tr>
+              <tr>
+                <td>Predomina una <strong>mentalidad religiosa y espiritual</strong>, según la cual el hombre adora a los dioses para obtener su favor y evitar su castigo.</td>
+                <td>Predomina una <strong>mentalidad fatalista</strong>, según la cual el hombre, mortal, cumple un destino, voluntad de los dioses, inmortales.</td>
+              </tr>
+              <tr>
+                <td>La vida personal se concibe dentro de una <strong>jerarquía</strong>, cuya autoridad debe respetarse cumpliendo una serie de <strong>preceptos</strong> que perfeccionan a la persona.</td>
+                <td>Honda <strong>admiración hacia lo aristocrático</strong>: la literatura ensalza a los héroes, personajes con cualidades extraordinarias, dignos de ser imitados.</td>
+              </tr>
+              <tr>
+                <td>Se rinde culto a las <strong>virtudes morales</strong> (justicia, piedad, honestidad), base de la dignidad humana.</td>
+                <td>Se rinde culto a <strong>lo bello, lo bueno y lo verdadero</strong>, virtudes con las que se logra equilibrio y armonía.</td>
+              </tr>
+              <tr>
+                <td>La <strong>muerte</strong> se enfoca desde una perspectiva <strong>trascendente</strong>: el hombre se purifica en sucesivas reencarnaciones o consigue unirse a la divinidad, alcanzando así la vida eterna.</td>
+                <td><strong>Superación de la muerte</strong>: el tiempo no se concibe desde un punto de vista lineal, sino cíclico, por lo que el mundo se construye sobre el eterno retorno de valores que se pierden y recuperan continuamente.</td>
+              </tr>
+              <tr>
+                <td>Se desarrolla un <strong>pensamiento mágico</strong>, que recurre a la fantasía para explicar los fenómenos y al poder espiritual para influir en los acontecimientos.</td>
+                <td>Se desarrolla el <strong>pensamiento científico, filosófico y político</strong>, dentro de un espíritu racional, en el que destacan Platón y Aristóteles.</td>
+              </tr>
+              <tr>
+                <td>Tiene una clara <strong>voluntad didáctica</strong>, pretende educar en ciertos valores: el respeto a la naturaleza, la amistad, el amor y el buen gobierno.</td>
+                <td>Combina la <strong>voluntad didáctica</strong> (<em>prodesse</em>) con el <strong>disfrute estético</strong> (<em>delectare</em>), aunque estos dos componentes no suelen mezclarse en la misma obra.</td>
+              </tr>
+              <tr>
+                <td>Se da gran importancia al <strong>simbolismo</strong>, que permite expresar ideas complejas recurriendo a objetos o a sucesos convencionales.</td>
+                <td>Se da gran importancia al <strong>análisis</strong>, que permite comprender la realidad yendo a su esencia, descomponiéndola en ideas claras y distintas.</td>
+              </tr>
+              <tr>
+                <td>Los <strong>géneros literarios</strong> más frecuentes son los mitos, las fábulas, los cuentos, los proverbios, las profecías, la historia, los cantos y las oraciones.</td>
+                <td>Los <strong>géneros literarios</strong> son variados y originales: épica, tragedia, comedia, lírica, historia, oratoria, nacen en Grecia y pasan a Roma, que crea la sátira.</td>
+              </tr>
+              <tr>
+                <td>Los <strong>valores poéticos</strong> dependen de la repetición de ideas y fórmulas gramaticales.</td>
+                <td>Los <strong>valores poéticos</strong> dependen del uso de figuras retóricas en todos los niveles de la lengua.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: 1.1 Contexto Histórico Grecia -->
+    <section class="slide" data-index="4" data-title="1.1 Contexto histórico">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.1 Contexto Histórico</span>
+          <h2 class="slide-title">1.1 CONTEXTO HISTÓRICO: GRECIA</h2>
+        </div>
+        <span class="slide-number">04 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="pane-text">
+          <div class="card terracotta">
+            <div class="card-title">Evolución de la Literatura y Sociedad Clásica</div>
+            <p>La historia y las letras del mundo clásico se estructuran a lo largo de grandes etapas que abarcan desde el siglo VIII a.C. hasta la caída del Imperio romano en el 476 d.C.:</p>
+            <ul style="margin-top:6px;">
+              <li><strong>Época arcaica (s. VIII - VI a.C.):</strong> Homero, Hesíodo, Safo de Lesbos, Esopo; desarrollo de las <em>polis</em>.</li>
+              <li><strong>Época clásica (s. V - IV a.C.):</strong> Siglo de oro de Atenas (Pericles); auge de la tragedia (Esquilo, Sófocles, Eurípides), comedia (Aristófanes), historia y filosofía (Sócrates, Platón, Aristóteles).</li>
+              <li><strong>Época helenística (s. III - I a.C.):</strong> Expansión con Alejandro Magno, reinos helenísticos, centro en Alejandría.</li>
+              <li><strong>Época romana en Grecia (s. I a.C. - III d.C.):</strong> Conquista romana e integración cultural grecolatina.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="pane-image" onclick="openLightbox('presentacion_recursos/cronologia_general.jpg')">
+          <img src="presentacion_recursos/cronologia_general.jpg" alt="Cronología Grecia y Roma">
+          <span class="zoom-hint">🔍 Ampliar Cronología</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: La Civilización Griega -->
+    <section class="slide" data-index="5" data-title="La Civilización Griega">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.1 Contexto Histórico (Grecia)</span>
+          <h2 class="slide-title">LA CIVILIZACIÓN GRIEGA</h2>
+        </div>
+        <span class="slide-number">05 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="pane-text">
+          <div class="card blue">
+            <div class="card-title">Cuna de la Civilización Occidental</div>
+            <p>Grecia ha sido, junto al pueblo hebreo, la <strong>cuna de la civilización occidental</strong>. Su política, su pensamiento, su arte, su literatura alcanzaron tal perfección y profundidad, que han determinado, en mayor medida que ningún otro pueblo, el desarrollo cultural de Occidente.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Fronteras y Organización en Polis</div>
+            <p><strong>Amplitud de fronteras:</strong> amplia zona de influencia más allá de la Península del Peloponeso.</p>
+            <p><strong>Organización del territorio:</strong> en <em>polis</em>, ciudades-estado independientes entre sí.</p>
+          </div>
+          <div class="card terracotta">
+            <div class="card-title">Principales Polis y Difusión Cultural</div>
+            <ul>
+              <li><strong>Atenas (Ática):</strong> potencia comercial.</li>
+              <li><strong>Esparta (Peloponeso):</strong> potencia militar.</li>
+              <li><strong>Tebas (Beocia):</strong> predominio oligarquía aristocrática.</li>
+              <li><strong>Difusión de la cultura:</strong> literatura, arte, ciencia...</li>
+            </ul>
+          </div>
+        </div>
+        <div class="pane-image" onclick="openLightbox('presentacion_recursos/mapa_grecia_polis.png')">
+          <img src="presentacion_recursos/mapa_grecia_polis.png" alt="Mapa Grecia y Polis">
+          <span class="zoom-hint">🔍 Ampliar Mapa</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: Conflictos y Alejandro Magno -->
+    <section class="slide" data-index="6" data-title="Conflictos y Alejandro Magno">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.1 Contexto Histórico (Grecia)</span>
+          <h2 class="slide-title">CONFLICTOS HISTÓRICOS Y EXPANSIÓN</h2>
+        </div>
+        <span class="slide-number">06 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="pane-text">
+          <div class="card">
+            <div class="card-title">Guerras Médicas y Época Dorada</div>
+            <p><strong>Guerras Médicas (490-478 a.C.):</strong> lucha contra los persas.</p>
+            <p><strong>Liga de Delos (478 a.C.):</strong> liderada por Atenas.</p>
+            <p><strong>Pericles (495-429 a.C.):</strong> época dorada de Atenas.</p>
+          </div>
+          <div class="card terracotta">
+            <div class="card-title">Guerra del Peloponeso y Hegemonía Tebana</div>
+            <p><strong>Guerra del Peloponeso (431 a.C.):</strong> Esparta invade el Ática. Guerra civil, prolongada y cruenta. Enfrentamiento de dos concepciones de la vida.</p>
+            <p><strong>Batalla de Leuctra (371 a.C.):</strong> Tebas se impone a Esparta para conseguir la hegemonía sobre los pueblos griegos.</p>
+          </div>
+          <div class="card blue">
+            <div class="card-title">Macedonia y Alejandro Magno</div>
+            <p><strong>Filipo II de Macedonia (382-336 a.C.)</strong> y <strong>Alejandro Magno (356-323 a.C.):</strong> expansión del imperio de Alejandro Magno hacia Oriente.</p>
+          </div>
+        </div>
+        <div class="pane-image" onclick="openLightbox('presentacion_recursos/alejandro_mosaico.jpg')">
+          <img src="presentacion_recursos/alejandro_mosaico.jpg" alt="Mosaico de Alejandro Magno">
+          <span class="zoom-hint">🔍 Ampliar Imagen</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: El Mito como Germen -->
+    <section class="slide" data-index="7" data-title="El Mito como Germen">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.1 Contexto Histórico (Grecia)</span>
+          <h2 class="slide-title">EL MITO COMO GERMEN DE LA LITERATURA</h2>
+        </div>
+        <span class="slide-number">07 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="pane-text" style="flex:0.85;">
+          <div class="card gold">
+            <div class="card-title">El Mito en la Literatura Clásica</div>
+            <p>Los relatos míticos constituyeron la base de la memoria colectiva griega y la fuente nutricia primordial de toda su creación literaria: desde las grandes epopeyas homéricas hasta el teatro trágico y la lírica coral.</p>
+            <p style="margin-top:6px;">A través del mito, el pueblo griego explicó los misterios del cosmos, la condición mortal del ser humano y los conflictos eternos entre la voluntad divina y el destino.</p>
+          </div>
+        </div>
+        <div class="pane-image" style="flex:1.15; background:#000; padding:0;">
+          <div class="video-frame">
+            <video controls preload="metadata" poster="presentacion_recursos/mito_icono.png">
+              <source src="El mito como germen de la literatura.mp4" type="video/mp4">
+              Tu navegador no soporta reproducción de vídeo MP4.
+            </video>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 8: Actividades 1 -->
+    <section class="slide" data-index="8" data-title="Actividades 1">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">Bloque 1.1</span>
+          <h2 class="slide-title">ACTIVIDADES</h2>
+        </div>
+        <span class="slide-number">08 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="activity-container">
+          <div class="activity-img-box" onclick="openLightbox('presentacion_recursos/actividades_1.png')">
+            <img src="presentacion_recursos/actividades_1.png" alt="Cuaderno de Actividades 1">
+          </div>
+          <div class="activity-info-box">
+            <span class="activity-badge">TAREA ACADÉMICA</span>
+            <div class="activity-task">
+              <h4>Trabajo del Libro de Texto</h4>
+              <p><strong>Página 47</strong></p>
+              <p><strong>Ejercicio nº 1:</strong> apartados (a, b, c, d, e).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 9: El Nacimiento de la Épica -->
+    <section class="slide" data-index="9" data-title="El Nacimiento de la Épica">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.2 Grecia • La Poesía Épica</span>
+          <h2 class="slide-title">EL NACIMIENTO DE LA ÉPICA</h2>
+        </div>
+        <span class="slide-number">09 / 44</span>
+      </div>
+      <div class="slide-body" style="align-items: center;">
+        <div class="pane-text" style="flex: 1.8; justify-content: center; gap: clamp(14px, 2.2vh, 26px);">
+          <div class="card blue" style="padding: clamp(14px, 2.2vh, 24px) clamp(18px, 2vw, 28px);">
+            <div class="card-title" style="font-size: clamp(1.08rem, 1.45vw, 1.32rem); margin-bottom: 8px;">Concepto y Esencia</div>
+            <p style="font-size: clamp(0.9rem, 1.22vw, 1.1rem); line-height: 1.5; margin-bottom: 6px;">El más antiguo de los géneros literarios clásicos (junto a la lírica y el drama).</p>
+            <p style="font-size: clamp(0.9rem, 1.22vw, 1.1rem); line-height: 1.5; margin-bottom: 6px;"><strong>Etimología:</strong> Proviene del griego <em>épos</em>, que significa "narración".</p>
+            <p style="font-size: clamp(0.9rem, 1.22vw, 1.1rem); line-height: 1.5; margin-bottom: 6px;"><strong>Esencia:</strong> Es una poesía narrativa que relata las hazañas de héroes del pasado.</p>
+            <p style="font-size: clamp(0.9rem, 1.22vw, 1.1rem); line-height: 1.5;"><strong>¿Qué es?</strong> La poesía épica es un relato de las hazañas de los héroes del pasado.</p>
+          </div>
+          <div class="card terracotta" style="padding: clamp(14px, 2.2vh, 24px) clamp(18px, 2vw, 28px);">
+            <div class="card-title" style="font-size: clamp(1.08rem, 1.45vw, 1.32rem); margin-bottom: 8px;">¿Quién escribe estas obras? El Aedo</div>
+            <p style="font-size: clamp(0.9rem, 1.22vw, 1.1rem); line-height: 1.5; margin-bottom: 8px;">El <strong>aedo</strong>, un cantor que recopilaba y daba forma a los relatos de la memoria colectiva.</p>
+            <ul style="font-size: clamp(0.88rem, 1.18vw, 1.06rem); line-height: 1.5;">
+              <li style="margin-bottom: 4px;">Sin texto escrito prefijado (debido a que el alfabeto griego no se desarrolló hasta el siglo IX a.C.).</li>
+              <li style="margin-bottom: 4px;">Improvisa y crea en cada ocasión gracias a su conocimiento de leyendas de su pueblo y fórmulas fijas.</li>
+              <li style="margin-bottom: 4px;">Acompañaba su canto con una lira ante nobles o en plazas públicas.</li>
+            </ul>
+            <p style="margin-top:8px; font-size: clamp(0.92rem, 1.24vw, 1.12rem);"><strong>Autores:</strong> Homero y Hesíodo.</p>
+          </div>
+        </div>
+        <div class="pane-image" style="flex: 0.48; max-width: 360px; max-height: 68%; align-self: center;" onclick="openLightbox('presentacion_recursos/heroe_griego.png')">
+          <img src="presentacion_recursos/heroe_griego.png" alt="El aedo y el héroe épico" style="max-height: 100%; object-fit: contain;">
+          <span class="zoom-hint">🔍 Ampliar</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 10: Características de la Épica -->
+    <section class="slide" data-index="10" data-title="Características de la Épica">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.2 Grecia • La Poesía Épica</span>
+          <h2 class="slide-title">CARACTERÍSTICAS DE LA ÉPICA</h2>
+        </div>
+        <span class="slide-number">10 / 44</span>
+      </div>
+      <div class="slide-body" style="align-items: center;">
+        <div class="pane-text" style="flex: 1.85; justify-content: center;">
+          <div class="card" style="padding: clamp(14px, 2.2vh, 24px) clamp(20px, 2.4vw, 32px);">
+            <div class="card-title" style="font-size: clamp(1.08rem, 1.45vw, 1.32rem); margin-bottom: 10px;">
+              Características
+            </div>
+            <ul style="font-size: clamp(0.84rem, 1.1vw, 1rem); line-height: 1.48;">
+              <li style="margin-bottom: 5px;">Relata grandes <strong>gestas del pasado</strong>.</li>
+              <li style="margin-bottom: 5px;">Aparece asociada a la <strong>historia griega</strong>.</li>
+              <li style="margin-bottom: 5px;">La acción se desarrolla en un <strong>contexto de guerra</strong>, de lucha.</li>
+              <li style="margin-bottom: 5px;">El protagonista es un <strong>héroe</strong> que encarna los ideales colectivos de una época.</li>
+              <li style="margin-bottom: 5px;">Incorpora <strong>temas mitológicos</strong>; de hecho, es habitual que los dioses intervengan en la acción.</li>
+              <li style="margin-bottom: 5px;">Utiliza una <strong>lengua artificial</strong>, que quizá nunca llegó a hablarse, con frecuentes arcaísmos.</li>
+              <li style="margin-bottom: 6px;">Emplea <strong>fórmulas épicas</strong>, es decir, expresiones que facilitan al auditorio la comprensión de la historia. Entre ellas, destacan:</li>
+            </ul>
+            <ul style="list-style: none; padding-left: clamp(24px, 3vw, 44px); font-size: clamp(0.8rem, 1.05vw, 0.95rem); line-height: 1.44; margin-top: 3px;">
+              <li class="epic-sub">El <strong>epíteto épico</strong>, expresión fija que se asocia con un personaje.</li>
+              <li class="epic-sub">Las <strong>repeticiones</strong>, a veces de versos enteros, para narrar la misma situación.</li>
+              <li class="epic-sub"><strong>Intervención final del narrador</strong>, tras las palabras de un personaje.</li>
+              <li class="epic-sub">Utiliza un <strong>solo tipo de verso</strong>, que se repite a lo largo de la obra.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="pane-image" style="flex: 0.45; max-width: 320px; max-height: 72%; align-self: center;" onclick="openLightbox('presentacion_recursos/heroe_griego.png')">
+          <img src="presentacion_recursos/heroe_griego.png" alt="Guerrero y divinidades griegas" style="max-height: 100%; object-fit: contain;">
+          <span class="zoom-hint">🔍 Ampliar</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 11: Homero -->
+    <section class="slide" data-index="11" data-title="Homero">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.2 Grecia • La Poesía Épica</span>
+          <h2 class="slide-title">HOMERO</h2>
+        </div>
+        <span class="slide-number">11 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="pane-text">
+          <div class="card">
+            <div class="card-title">¿Quién fue y cuándo vivió?</div>
+            <p><strong>Cronología:</strong> Se sitúa su existencia en el <strong>siglo VIII a. C.</strong> (período arcaico de Grecia). Época en la que Grecia sale de su "Época Oscura" y resurge la escritura gracias al alfabeto fenicio.</p>
+            <p><strong>Origen geográfico:</strong> Siete ciudades (entre ellas Esmirna y Quíos) disputaban ser su cuna. La teoría más aceptada es que procedía de <strong>Jonia</strong> (costa del mar Egeo en Asia Menor), pues sus poemas están en una mezcla dialectal donde predomina el jónico.</p>
+            <p><strong>La leyenda:</strong> La tradición lo describe como un aedo <strong>ciego</strong>. En griego antiguo, <em>Homeros</em> se asociaba con "el que no ve" o "el que sigue a un guía".</p>
+          </div>
+          <div class="card terracotta">
+            <div class="card-title">La Cuestión Homérica y Principales Obras</div>
+            <p><strong>La cuestión homérica:</strong> debate histórico sobre si Homero existió o fue un personaje de ficción para agrupar cantos populares. El consenso actual: existió como el último y más brillante eslabón de una larguísima tradición de <strong>poesía oral</strong>.</p>
+            <p style="margin-top:4px;"><strong>Principales obras:</strong> La <em>Ilíada</em> y la <em>Odisea</em>. En ellas definió los dos grandes temas de la condición humana: <strong>la guerra</strong> y <strong>el viaje</strong>.</p>
+          </div>
+        </div>
+        <div class="pane-image" onclick="openLightbox('presentacion_recursos/busto_homero.jpg')">
+          <img src="presentacion_recursos/busto_homero.jpg" alt="Busto de Homero">
+          <span class="zoom-hint">🔍 Ampliar Homero</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 12: La Ilíada -->
+    <section class="slide" data-index="12" data-title="La Ilíada">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.2 Grecia • La Poesía Épica</span>
+          <h2 class="slide-title">LA ILÍADA</h2>
+        </div>
+        <span class="slide-number">12 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="pane-text full-width">
+          <div class="grid-2">
+            <div class="card blue">
+              <div class="card-title">Marco y Tema Central</div>
+              <ul>
+                <li>Primer poema épico conservado de la literatura griega.</li>
+                <li><strong>Traducción:</strong> la historia de Ilión (Troya).</li>
+                <li>Narra en <strong>24 cantos</strong> (15.693 versos) un episodio del décimo año de la guerra de Troya.</li>
+                <li>El poeta sitúa la acción en un momento concreto del asedio de Troya por las tropas aqueas o griegas.</li>
+                <li><strong>Tema central:</strong> la cólera de <strong>Aquiles</strong> (protagonista de la épica).</li>
+              </ul>
+            </div>
+            <div class="card terracotta">
+              <div class="card-title">Trama Argumental</div>
+              <ul>
+                <li><strong>Situación conflictiva previa:</strong> Los aqueos (griegos), liderados por Agamenón, y los troyanos ya están en guerra debido al rapto de Helena.</li>
+                <li><strong>Detonante (situación inicial):</strong> Agamenón arrebata a Aquiles su esclava Briseida. Provoca la ira de Aquiles y su retirada del combate; los griegos son derrotados sucesivamente.</li>
+                <li><strong>Nudo:</strong> Patroclo, amigo de Aquiles, muere a manos del príncipe troyano Héctor.</li>
+                <li><strong>Resolución:</strong> Deseoso de venganza, Aquiles se reconcilia con Agamenón, regresa a la lucha y mata a Héctor en duelo.</li>
+                <li><strong>Cierre:</strong> Concluye con los funerales de Patroclo (campamento aqueo) y de Héctor (Troya).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 13: La Ilíada: Características Literarias -->
+    <section class="slide" data-index="13" data-title="La Ilíada: Características Literarias">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.2 Grecia • La Poesía Épica</span>
+          <h2 class="slide-title">1.2 GRECIA. LA POESÍA ÉPICA</h2>
+        </div>
+        <span class="slide-number">13 / 44</span>
+      </div>
+      <div class="slide-body" style="align-items: center; justify-content: center;">
+        <div class="pane-text full-width" style="max-width: 1360px; margin: 0 auto; justify-content: center;">
+          <div class="card" style="padding: clamp(18px, 2.6vh, 30px) clamp(28px, 3.2vw, 48px);">
+            <div class="card-title" style="font-size: clamp(1.15rem, 1.55vw, 1.4rem); margin-bottom: 14px; border-bottom: 2px solid var(--gold-light); padding-bottom: 6px;">
+              Características literarias de la obra
+            </div>
+            <ul style="font-size: clamp(0.88rem, 1.16vw, 1.04rem); line-height: 1.54;">
+              <li style="margin-bottom: 8px;">
+                <strong>Foco en la humanidad.</strong> La atención se centra en la <strong>humanidad</strong> de los guerreros; las descripciones de la época y del entorno quedan en un segundo plano.
+              </li>
+              <li style="margin-bottom: 8px;">
+                <strong>Tensión dramática.</strong> El dramatismo se consigue alternando <strong>cantos tensos</strong> (batallas) con otros <strong>distendidos</strong> (celebraciones de victoria). Esta tensión asciende progresivamente hasta estallar con la cólera de Aquiles en el canto XXII.
+              </li>
+              <li style="margin-bottom: 8px;">
+                <strong>Descripciones dinámicas.</strong> Las descripciones dotan de movimiento tanto a los personajes (ej. la despedida de Héctor y su esposa Andrómaca) como a los objetos (ej. un escudo o una armadura).
+              </li>
+              <li style="margin-bottom: 8px;">
+                <strong>Recursos estilísticos.</strong>
+                <ul style="list-style: none; padding-left: clamp(26px, 3.2vw, 44px); font-size: clamp(0.84rem, 1.1vw, 0.98rem); line-height: 1.48; margin-top: 6px; margin-bottom: 4px;">
+                  <li class="epic-sub" style="margin-bottom: 5px;"><u><strong>Epítetos épicos:</strong></u> Expresiones fijas para caracterizar personajes (ej. «Atenea, la de los ojos brillantes», «Andrómaca, la de níveos brazos» o «Aquiles, el de los pies ligeros»).</li>
+                  <li class="epic-sub" style="margin-bottom: 2px;"><u><strong>Comparaciones activas:</strong></u> Metáforas dinámicas que añaden plasticidad a la narración (ej. «como en el monte el gavilán se abalanza tras la cándida paloma»).</li>
+                </ul>
+              </li>
+              <li style="margin-bottom: 4px;">
+                <strong>El papel de los dioses:</strong> Los dioses toman partido de forma activa por uno u otro bando, tienen forma antropomórfica y actúan como informadores (a través de sueños) o colaboradores de sus protegidos:
+                <ul style="list-style: none; padding-left: clamp(26px, 3.2vw, 44px); font-size: clamp(0.84rem, 1.1vw, 0.98rem); line-height: 1.48; margin-top: 6px; margin-bottom: 2px;">
+                  <li class="epic-sub" style="margin-bottom: 5px;"><u><strong>A favor de los griegos:</strong></u> Atenea (quien, por ejemplo, impide que Aquiles ataque a Agamenón), Hera, Hefesto, Poseidón, Hermes y Tetis.</li>
+                  <li class="epic-sub" style="margin-bottom: 2px;"><u><strong>A favor de los troyanos:</strong></u> Afrodita, Apolo (quien vela el cuerpo del troyano caído), Artemisa, Ares y Leto.</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 14: Actividades 2 -->
+    <section class="slide" data-index="14" data-title="Actividades 2">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">Bloque 1.2 • La Ilíada</span>
+          <h2 class="slide-title">ACTIVIDADES</h2>
+        </div>
+        <span class="slide-number">14 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="activity-container">
+          <div class="activity-img-box" onclick="openLightbox('presentacion_recursos/actividades_iliada.png')">
+            <img src="presentacion_recursos/actividades_iliada.png" alt="Cuaderno Actividades Ilíada">
+          </div>
+          <div class="activity-info-box">
+            <span class="activity-badge">LECTURA Y ANÁLISIS</span>
+            <div class="activity-task">
+              <h4>Trabajo sobre la Ilíada</h4>
+              <p>Lee el fragmento inicial de la obra («Canta, Diosa, la cólera de Aquiles...») y extrae las características fundamentales del poema épico.</p>
+              <p style="margin-top:6px;"><strong>Página 48:</strong> lectura de fragmento del <strong>ejercicio 11</strong>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 15: La Odisea -->
+    <section class="slide" data-index="15" data-title="La Odisea">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.2 Grecia • La Poesía Épica</span>
+          <h2 class="slide-title">LA ODISEA</h2>
+        </div>
+        <span class="slide-number">15 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="pane-text">
+          <div class="card blue">
+            <div class="card-title">Significado y Eje Narrativo</div>
+            <p><strong>Significado:</strong> Su nombre significa «la historia de Odiseo», nombre griego de Ulises.</p>
+            <p><strong>Argumento:</strong> Relata en <strong>24 cantos</strong> el regreso del héroe a su patria, la isla de Ítaca, tras la guerra de Troya. El viaje dura <strong>diez años</strong>.</p>
+            <p><strong>Eje narrativo:</strong> Héroe bajo acoso constante de <strong>Poseidón</strong> (dios marino) y protección de <strong>Palas Atenea</strong> (la de los ojos brillantes).</p>
+          </div>
+          <div class="card terracotta">
+            <div class="card-title">Estructura Tripartita</div>
+            <ul>
+              <li><strong>a) La Telemaquia (cantos I-IV):</strong> Telémaco, hijo de Ulises —tras invocación y asamblea de dioses— busca noticias de su padre en Pilos y Esparta.</li>
+              <li><strong>b) La verdadera Odisea (cantos V-XII):</strong> Aventuras marinas del héroe. Vence peligros del mar (Escila, cíclopes) y tentaciones de mujeres que quieren casarse con él (Calipso, maga Circe).</li>
+              <li><strong>c) La venganza en Ítaca (cantos XIII-XXIV):</strong> Muerte de los pretendientes de su esposa a manos de Ulises y de su hijo.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="pane-image" onclick="openLightbox('presentacion_recursos/odisea_nave.jpg')">
+          <img src="presentacion_recursos/odisea_nave.jpg" alt="Nave de Ulises">
+          <span class="zoom-hint">🔍 Ampliar Odisea</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 16: Ulises y sus Valores -->
+    <section class="slide" data-index="16" data-title="Ulises y sus Valores">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.2 Grecia • La Poesía Épica</span>
+          <h2 class="slide-title">EL PERSONAJE DE ULISES Y SU SISTEMA DE VALORES</h2>
+        </div>
+        <span class="slide-number">16 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="pane-text">
+          <div class="card">
+            <div class="card-title">Transformación Respecto a la Ilíada</div>
+            <p>La obra experimenta una profunda transformación con respecto a la <em>Ilíada</em>:</p>
+            <ul style="margin-top:6px;">
+              <li>Pasa de una lógica militar a un <strong>universo pacificado</strong>, donde el arte de la palabra es tan importante como el de la guerra.</li>
+              <li>El protagonista se muestra «politizado»: es <strong>prudente, astuto, versátil e ingenioso</strong>.</li>
+            </ul>
+          </div>
+          <div class="card blue">
+            <div class="card-title">Ideal Práctico y Persuasión</div>
+            <ul>
+              <li>Su motivación principal (móvil) es <strong>salvarse y regresar a casa</strong>, representando un ideal de vida práctico.</li>
+              <li>Prefiere la <strong>persuasión al enfrentamiento</strong> y solo usa la violencia cuando es estrictamente indispensable.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="pane-image" onclick="openLightbox('presentacion_recursos/ulises_retrato.png')">
+          <img src="presentacion_recursos/ulises_retrato.png" alt="Tabla comparativa: Ilíada vs Odisea">
+          <span class="zoom-hint">🔍 Ampliar Tabla Comparativa</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 17: Actividades 3 -->
+    <section class="slide" data-index="17" data-title="Actividades 3">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">Bloque 1.2 • La Odisea</span>
+          <h2 class="slide-title">ACTIVIDADES</h2>
+        </div>
+        <span class="slide-number">17 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="activity-container">
+          <div class="activity-img-box" onclick="openLightbox('presentacion_recursos/actividades_odisea.png')">
+            <img src="presentacion_recursos/actividades_odisea.png" alt="Cuaderno Actividades Odisea">
+          </div>
+          <div class="activity-info-box">
+            <span class="activity-badge">TAREA ACADÉMICA</span>
+            <div class="activity-task">
+              <h4>Actividades de la Odisea</h4>
+              <p><strong>Página 47:</strong> nº 7 (apartados a, b, c, d, e -visionar vídeo-).</p>
+              <p style="margin-top:6px;"><strong>Actividad Odisea:</strong> material disponible en la plataforma <strong>Aules</strong>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 18: Troya (2004) -->
+    <section class="slide" data-index="18" data-title="Troya (2004)">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">Pervivencia Clásica</span>
+          <h2 class="slide-title">TROYA (2004)</h2>
+        </div>
+        <span class="slide-number">18 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="pane-text" style="flex:0.8;">
+          <div class="card terracotta">
+            <div class="card-title">Cine y Mito Clásico</div>
+            <p>La película <em>Troya</em> (Wolfgang Petersen, 2004) adapta libremente los episodios homéricos de la <em>Ilíada</em>, mostrando la pervivencia universal de sus héroes (Aquiles, Héctor, Agamenón, Odiseo) en la cultura audiovisual del siglo XXI.</p>
+          </div>
+        </div>
+        <div class="pane-image" style="flex:1.2;" onclick="openLightbox('presentacion_recursos/pelicula_troya.png')">
+          <img src="presentacion_recursos/pelicula_troya.png" alt="Cartel de Troya (2004)">
+          <span class="zoom-hint">🔍 Ampliar Cartel</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 19: La Poesía Lírica Griega -->
+    <section class="slide" data-index="19" data-title="La Poesía Lírica">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.2 Grecia • La Lírica</span>
+          <h2 class="slide-title">1.2 GRECIA. LA POESÍA LÍRICA</h2>
+        </div>
+        <span class="slide-number">19 / 44</span>
+      </div>
+      <div class="slide-body" style="align-items: center;">
+        <div class="pane-text" style="flex: 1.6; justify-content: center; gap: clamp(8px, 1.4vh, 14px);">
+          <div class="card" style="padding: clamp(10px, 1.5vh, 18px) clamp(16px, 1.8vw, 24px);">
+            <div class="card-title" style="font-size: clamp(0.96rem, 1.25vw, 1.15rem); margin-bottom: 6px;">Características de la Lírica</div>
+            <p style="font-size: clamp(0.78rem, 0.98vw, 0.89rem); line-height: 1.42; margin-bottom: 6px;">
+              Los líricos crearon una poesía, que recitaban al son de la <strong>lira</strong> en las ciudades, en los santuarios o en grandes fiestas, durante las cuales se desarrollaron certámenes poéticos.
+            </p>
+            <ul style="font-size: clamp(0.76rem, 0.95vw, 0.87rem); line-height: 1.38;">
+              <li style="margin-bottom: 3px;">Es una <strong>poesía subjetiva</strong> y que muestra la <strong>vida privada</strong> del poeta o de la colectividad.</li>
+              <li style="margin-bottom: 3px;">Canta <strong>hechos del presente</strong>, no las glorias pasadas, como los <em>aedos</em>.</li>
+              <li style="margin-bottom: 3px;">Toca una <strong>gran variedad de temas</strong>: religiosos, políticos, amorosos, satíricos o existenciales (paso del tiempo, la muerte...).</li>
+              <li style="margin-bottom: 3px;">Utiliza diferentes <strong>formas métricas</strong>.</li>
+              <li style="margin-bottom: 3px;">Se expresa en <strong>distintos dialectos</strong> (dorio, eolio, jonio), frente a la épica, que se ceñía al dialecto homérico.</li>
+              <li style="margin-bottom: 2px;">Su ejecución es tanto <strong>personal</strong>, cantada por un solo poeta o solista, como <strong>coral</strong>, cantada por un grupo o coro de jóvenes, generalmente en una fiesta, en la que la comunidad se siente protagonista y expresa sus ideas o sentimientos colectivos.</li>
+            </ul>
+          </div>
+          <div class="card terracotta" style="padding: clamp(10px, 1.5vh, 16px) clamp(16px, 1.8vw, 24px);">
+            <div class="card-title" style="font-size: clamp(0.96rem, 1.25vw, 1.15rem); margin-bottom: 6px;">Safo de Lesbos</div>
+            <ul style="font-size: clamp(0.78rem, 0.98vw, 0.89rem); line-height: 1.42;">
+              <li style="margin-bottom: 4px;">
+                Safo de Lesbos (alrededor de 600 a.C.) es la <strong>poetisa del amor</strong> en todas sus vertientes (la pasión, los celos, el desengaño, el abandono).
+              </li>
+              <li style="margin-bottom: 2px;">
+                En su <strong>poesía</strong>, <strong>sencilla</strong> y <strong>delicada</strong>, describe los tormentos, las ansias o los deseos de los amantes. Así ocurre en el <em>Himno a Afrodita</em>, su única obra completa, en la que ruega a la diosa que, como aliada, venga en su ayuda.
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="pane-image" style="flex: 0.55; max-width: 320px; max-height: 78%; align-self: center;" onclick="openLightbox('presentacion_recursos/safo_lesbos.jpg')">
+          <img src="presentacion_recursos/safo_lesbos.jpg" alt="Safo de Lesbos" style="max-height: 100%; object-fit: contain;">
+          <span class="zoom-hint">🔍 Ampliar Safo</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 20: Actividades 4 -->
+    <section class="slide" data-index="20" data-title="Actividades 4">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">Bloque 1.2 • La Lírica</span>
+          <h2 class="slide-title">ACTIVIDADES</h2>
+        </div>
+        <span class="slide-number">20 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="activity-container">
+          <div class="activity-img-box" onclick="openLightbox('presentacion_recursos/actividades_lirica.png')">
+            <img src="presentacion_recursos/actividades_lirica.png" alt="Cuaderno Actividades Lírica">
+          </div>
+          <div class="activity-info-box">
+            <span class="activity-badge">TAREA ACADÉMICA</span>
+            <div class="activity-task">
+              <h4>Actividades de Poesía Lírica</h4>
+              <p><strong>Página 50:</strong> nº 13 (apartados b, c).</p>
+              <p style="margin-top:6px;"><strong>Página 50:</strong> nº 16.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 21: El Teatro Griego -->
+    <section class="slide" data-index="21" data-title="El Teatro Griego">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.2 Grecia • El Teatro</span>
+          <h2 class="slide-title">1.2 GRECIA. EL TEATRO</h2>
+        </div>
+        <span class="slide-number">21 / 44</span>
+      </div>
+      <div class="slide-body" style="align-items: center; justify-content: center;">
+        <div class="pane-text full-width" style="max-width: 1360px; margin: 0 auto; justify-content: center;">
+          <div class="card" style="padding: clamp(14px, 2.2vh, 26px) clamp(24px, 2.8vw, 44px);">
+            <div class="card-title" style="font-size: clamp(1.1rem, 1.45vw, 1.32rem); margin-bottom: 12px; border-bottom: 2px solid var(--gold-light); padding-bottom: 6px;">
+              Origen y Evolución del Teatro Griego
+            </div>
+            <ul style="font-size: clamp(0.81rem, 1.05vw, 0.95rem); line-height: 1.48;">
+              <li style="margin-bottom: 6px;">
+                El teatro griego tiene <strong>un origen ritual</strong>. Nace en el <u>siglo VI a.C.</u> vinculado a las fiestas en honor del dios Dionisos, que se celebraban la última semana del mes de marzo, y en las que se cantaban himnos corales llamados <em>ditirambos</em>.
+              </li>
+              <li style="margin-bottom: 6px;">
+                A partir del año 534 a.C., las fiestas se transforman en una especie de <u>festival</u>, pagado por los <em>coregos</em>, personas adineradas que abonaban así sus tributos.
+              </li>
+              <li style="margin-bottom: 6px;">
+                Tres autores presentaban cada uno <strong>tres tragedias y un drama satírico</strong>. Las cuatro obras podían estar relacionadas por su tema, formando una tetralogía, aunque era frecuente una trilogía de tragedias.
+              </li>
+              <li style="margin-bottom: 6px;">
+                Las representaciones teatrales se sometían a un concurso, y un jurado, elegido a suertes entre el pueblo, premiaba al dramaturgo, al <em>corego</em> y a los protagonistas.
+              </li>
+              <li style="margin-bottom: 6px;">
+                Durante el <strong>siglo V a.C.</strong>, la representación teatral se convierte en un <strong>espectáculo total</strong> (parecido a una ópera o un musical de la actualidad), puesto en escena por dos grupos de personajes: el <strong>coro</strong> y los <strong>actores</strong>.
+                <ul style="list-style: none; padding-left: clamp(24px, 3vw, 42px); font-size: clamp(0.78rem, 1vw, 0.91rem); line-height: 1.44; margin-top: 5px; margin-bottom: 3px;">
+                  <li class="epic-sub" style="margin-bottom: 5px;">
+                    El <strong>coro</strong>, formado por doce miembros llamados <u>coreutas</u>, ocupaba la orquestra. Tomaba parte en la acción cantando y, a veces, también con evoluciones o bailes. Su representante, el <u>corifeo</u>, intervenía de forma recitada y, como portavoz del coro, podía entrar en diálogo con los actores.
+                  </li>
+                  <li class="epic-sub" style="margin-bottom: 2px;">
+                    Los <strong>actores</strong>, <u>dos varones</u>, representaban los papeles de todos los personajes mediante el empleo de variados atuendos y distintas <u>máscaras</u>. Las máscaras, de tela, corcho o madera, con color claro para personajes femeninos y más oscuro para masculinos, servían para caracterizar a los personajes, dotarlos de expresividad y ampliar su voz.
+                  </li>
+                </ul>
+              </li>
+              <li style="margin-bottom: 2px;">
+                Las dos formas esenciales del teatro griego eran la <strong>tragedia</strong> y la <strong>comedia</strong>.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 22: Arquitectura del Teatro Griego -->
+    <section class="slide" data-index="22" data-title="Arquitectura Teatral">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.2 Grecia • El Teatro</span>
+          <h2 class="slide-title">1.2 GRECIA. EL TEATRO: ARQUITECTURA</h2>
+        </div>
+        <span class="slide-number">22 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="pane-text" style="flex:0.9;">
+          <div class="card blue">
+            <div class="card-title">Partes del Edificio Teatral</div>
+            <ul>
+              <li><strong>Graderío (theatron):</strong> asientos semicirculares en la colina para la audiencia, con acústica excepcional.</li>
+              <li><strong>Orquesta (orchestra):</strong> espacio circular central donde cantaba y evolucionaba el coro.</li>
+              <li><strong>Proscenio (proskenion):</strong> plataforma elevada ante la escena donde actuaban los actores.</li>
+              <li><strong>Escena (skene):</strong> estructura de fondo para decorados, camerinos y cambios de máscara.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="pane-image" style="flex:1.1;" onclick="openLightbox('presentacion_recursos/plano_teatro_griego.jpg')">
+          <img src="presentacion_recursos/plano_teatro_griego.jpg" alt="Estructura del Teatro Griego">
+          <span class="zoom-hint">🔍 Ampliar Plano</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 23: Tragedia vs Comedia -->
+    <section class="slide" data-index="23" data-title="Tragedia vs Comedia">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.2 Grecia • El Teatro</span>
+          <h2 class="slide-title">1.2 GRECIA. EL TEATRO: TRAGEDIA vs COMEDIA</h2>
+        </div>
+        <span class="slide-number">23 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="comp-table-wrap">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th style="width: 14%;">ELEMENTO</th>
+                <th style="width: 43%;">TRAGEDIA</th>
+                <th style="width: 43%; background: #B94723;">COMEDIA</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="row-cat">Temas</td>
+                <td>Mitología o épica: destino, culpa, castigo divino, conflicto individuo-ciudad o angustia y liberación.</td>
+                <td>Crítica social, uniendo fantasía y realidad con elementos fijos (alusiones, insultos, chistes o parodias) para la risa o burla.</td>
+              </tr>
+              <tr>
+                <td class="row-cat">Acción dramática</td>
+                <td>Sufrimiento por un «conflicto» y termina con la destrucción del protagonista.</td>
+                <td>Nace en una situación angustiosa que el héroe resuelve felizmente al final de la obra.</td>
+              </tr>
+              <tr>
+                <td class="row-cat">Personajes</td>
+                <td>Héroes o dioses que representan el destino, la justicia o las pasiones.</td>
+                <td>Dioses, figuras reales o personajes creados por el autor como reflejo de la sociedad.</td>
+              </tr>
+              <tr>
+                <td class="row-cat">Héroe</td>
+                <td>Sucumbe a un destino funesto por su soberbia (<em>hybris</em>) y ceguera (<em>até</em>), que le llevan a decisiones injustas (<em>hamartía</em>).</td>
+                <td>Personaje cómico estereotipado: el esclavo ingenioso, el soldado fanfarrón, el joven enamoradizo, el viejo avaro...</td>
+              </tr>
+              <tr>
+                <td class="row-cat">Ejemplaridad</td>
+                <td>Identificación con el héroe que provoca en el espectador una <strong>catarsis</strong> o purificación, liberándolo de pasiones dañinas.</td>
+                <td>Reflejo de la historia y sociedad: critica los defectos de la época a través de personajes del momento.</td>
+              </tr>
+              <tr>
+                <td class="row-cat">Lenguaje</td>
+                <td>Culto y elevado.</td>
+                <td>Vulgar, incluso obsceno.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 24: Eje de los Tres Trágicos -->
+    <section class="slide" data-index="24" data-title="Eje de los Tres Trágicos">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.2 Grecia • El Teatro</span>
+          <h2 class="slide-title">1.2 GRECIA. EL TEATRO: LOS TRES GRANDES TRÁGICOS</h2>
+        </div>
+        <span class="slide-number">24 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="pane-image" style="flex:1;" onclick="openLightbox('presentacion_recursos/eje_tragicos.png')">
+          <img src="presentacion_recursos/eje_tragicos.png" alt="Eje de tiempo de Esquilo, Sófocles y Eurípides">
+          <span class="zoom-hint">🔍 Ampliar Eje Cronológico</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 25: Esquilo y Sófocles -->
+    <section class="slide" data-index="25" data-title="Esquilo y Sófocles">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.2 Grecia • El Teatro</span>
+          <h2 class="slide-title">1.2 GRECIA. EL TEATRO: ESQUILO Y SÓFOCLES</h2>
+        </div>
+        <span class="slide-number">25 / 44</span>
+      </div>
+      <div class="slide-body" style="align-items: center;">
+        <div class="pane-text full-width" style="max-width: 1360px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(8px, 1.4vh, 14px);">
+          <div class="card terracotta" style="display: flex; gap: clamp(14px, 2vw, 24px); align-items: center; padding: clamp(10px, 1.5vh, 16px) clamp(16px, 1.8vw, 24px);">
+            <div style="flex: 1;">
+              <div class="card-title" style="font-size: clamp(0.96rem, 1.25vw, 1.15rem); margin-bottom: 5px;">ESQUILO (525-456 a.C.)</div>
+              <p style="font-size: clamp(0.76rem, 0.96vw, 0.88rem); line-height: 1.4; margin-bottom: 4px;">
+                Esquilo es el <strong>creador de la tragedia</strong>. Aportó al género sus rasgos esenciales:
+              </p>
+              <ul style="font-size: clamp(0.74rem, 0.93vw, 0.86rem); line-height: 1.36; margin-bottom: 4px;">
+                <li style="margin-bottom: 2px;">argumentos tomados de la historia o inspirados en los mitos antiguos,</li>
+                <li style="margin-bottom: 2px;">introducción de un segundo actor al margen del coro;</li>
+                <li style="margin-bottom: 2px;">creación de la trilogía dramática, desarrollando un mismo tema en tres tragedias, lo que permitió tramas de mayor complejidad;</li>
+                <li style="margin-bottom: 2px;">y empleo de un lenguaje solemne y de un estilo majestuoso, casi épico.</li>
+              </ul>
+              <p style="font-size: clamp(0.76rem, 0.96vw, 0.88rem); line-height: 1.38; margin-bottom: 2px;">
+                La gran innovación de Esquilo estriba en la voluntad de realizar un examen de la condición del hombre a partir de la desgracia y el sufrimiento del inocente.
+              </p>
+              <p style="font-size: clamp(0.76rem, 0.96vw, 0.88rem); line-height: 1.38;">
+                De sus noventa obras se conservan únicamente siete.
+              </p>
+            </div>
+            <div style="flex: 0 0 clamp(95px, 10vw, 135px); text-align: center; cursor: pointer;" onclick="openLightbox('presentacion_recursos/busto_esquilo.jpg')">
+              <img src="presentacion_recursos/busto_esquilo.jpg" alt="Busto de Esquilo" style="width: 100%; max-height: clamp(100px, 15vh, 140px); object-fit: cover; border-radius: 8px; box-shadow: var(--shadow-sm);">
+              <span class="zoom-hint" style="position: static; transform: none; display: block; margin-top: 4px; font-size: 0.68rem; padding: 2px 6px;">🔍 Esquilo</span>
+            </div>
+          </div>
+          <div class="card blue" style="display: flex; gap: clamp(14px, 2vw, 24px); align-items: center; padding: clamp(10px, 1.5vh, 16px) clamp(16px, 1.8vw, 24px);">
+            <div style="flex: 0 0 clamp(85px, 9vw, 120px); text-align: center; cursor: pointer;" onclick="openLightbox('presentacion_recursos/busto_sofocles.jpg')">
+              <img src="presentacion_recursos/busto_sofocles.jpg" alt="Busto de Sófocles" style="width: 100%; max-height: clamp(95px, 14vh, 125px); object-fit: cover; border-radius: 8px; box-shadow: var(--shadow-sm);">
+              <span class="zoom-hint" style="position: static; transform: none; display: block; margin-top: 4px; font-size: 0.68rem; padding: 2px 6px;">🔍 Sófocles</span>
+            </div>
+            <div style="flex: 1;">
+              <div class="card-title" style="font-size: clamp(0.96rem, 1.25vw, 1.15rem); margin-bottom: 5px;">SÓFOCLES (496-406 a.C.)</div>
+              <p style="font-size: clamp(0.78rem, 0.98vw, 0.9rem); line-height: 1.44;">
+                Sófocles vive en el momento de esplendor de la Atenas democrática, por eso pone su <strong>teatro al servicio de la <em>polis</em></strong>. Su objetivo es educar al pueblo, para que sea consciente de la necesidad de actuar moralmente, de acuerdo con las normas establecidas. Su pensamiento se basa en los siguientes principios:
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 26: Sófocles: Innovaciones -->
+    <section class="slide" data-index="26" data-title="Sófocles: Innovaciones">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.2 Grecia • El Teatro</span>
+          <h2 class="slide-title">1.2 GRECIA. EL TEATRO: SÓFOCLES</h2>
+        </div>
+        <span class="slide-number">26 / 44</span>
+      </div>
+      <div class="slide-body" style="align-items: center;">
+        <div class="pane-text" style="flex: 1.65; justify-content: center;">
+          <div class="card blue" style="padding: clamp(12px, 1.8vh, 22px) clamp(20px, 2.4vw, 36px);">
+            <div class="card-title" style="font-size: clamp(1.02rem, 1.35vw, 1.22rem); margin-bottom: 8px;">
+              SÓFOCLES — Pensamiento e Innovaciones Teatrales
+            </div>
+            <ul style="font-size: clamp(0.77rem, 0.98vw, 0.9rem); line-height: 1.42; margin-bottom: 6px;">
+              <li style="margin-bottom: 3px;">Existen dos esferas o dos <strong>mundos</strong>: la de los dioses y la de los hombres.</li>
+              <li style="margin-bottom: 3px;">La <strong>naturaleza humana</strong> se caracteriza por el sufrimiento y la posibilidad de error, razón por la que ha de someterse al designio infalible de los dioses.</li>
+              <li style="margin-bottom: 4px;">De igual manera, la <em>polis</em> ha de ceñirse a la <strong>ley divina</strong>; cuando un gobernante no respeta el orden establecido, causa la desgracia del pueblo.</li>
+            </ul>
+            <p style="font-size: clamp(0.78rem, 1vw, 0.91rem); line-height: 1.4; margin-bottom: 5px; font-weight: 600; color: var(--primary);">
+              Apoyándose en estos planteamientos, Sófocles crea una obra dramática innovadora:
+            </p>
+            <ul style="list-style: none; padding-left: clamp(20px, 2.5vw, 36px); font-size: clamp(0.75rem, 0.95vw, 0.88rem); line-height: 1.38; margin-bottom: 6px;">
+              <li class="epic-sub" style="margin-bottom: 3px;">Introduce el <strong>tercer actor</strong> (antes solo podía haber dos actores en escena), con lo que la obra gana dinamismo y teatralidad.</li>
+              <li class="epic-sub" style="margin-bottom: 3px;">Ofrece <strong>diálogos más vivos</strong> para mantener el interés del espectador.</li>
+              <li class="epic-sub" style="margin-bottom: 3px;">Incrementa el <strong>protagonismo de los actores</strong> y se lo resta al coro, que se limita a comentar las escenas, con el fin de dinamizar la acción dramática.</li>
+              <li class="epic-sub" style="margin-bottom: 3px;">Mejora la <strong>técnica teatral</strong> con vestuario y decorados específicos para cada obra.</li>
+              <li class="epic-sub" style="margin-bottom: 3px;">Ofrece un profundo <strong>análisis psicológico</strong> de los personajes, en particular de los femeninos.</li>
+              <li class="epic-sub" style="margin-bottom: 2px;">Utiliza la <strong>ironía</strong>. Para ello, hace que el conflicto se resuelva con una revelación sorprendente, que cambia la perspectiva con la que el protagonista enfocaba su situación.</li>
+            </ul>
+            <p style="font-size: clamp(0.77rem, 0.98vw, 0.9rem); line-height: 1.4; border-top: 1px solid var(--border-card); padding-top: 5px;">
+              Escribió más de <strong>ciento treinta tragedias</strong>, de las que se conservan siete. De entre ellas destacan <em>Edipo rey</em>, <em>Electra</em> y <em>Antígona</em>.
+            </p>
+          </div>
+        </div>
+        <div class="pane-image" style="flex: 0.55; max-width: 320px; max-height: 80%; align-self: center;" onclick="openLightbox('presentacion_recursos/sofocles_edipo.jpg')">
+          <img src="presentacion_recursos/sofocles_edipo.jpg" alt="Edipo y la Esfinge — Tragedia de Sófocles" style="max-height: 100%; object-fit: contain;">
+          <span class="zoom-hint">🔍 Edipo y la Esfinge (Sófocles)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 27: Eurípides -->
+    <section class="slide" data-index="27" data-title="Eurípides">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.2 Grecia • El Teatro</span>
+          <h2 class="slide-title">1.2 GRECIA. EL TEATRO: EURÍPIDES (480-406 a.C.)</h2>
+        </div>
+        <span class="slide-number">27 / 44</span>
+      </div>
+      <div class="slide-body" style="align-items: center;">
+        <div class="pane-text" style="flex: 1.9; justify-content: center;">
+          <div class="card" style="padding: clamp(14px, 2vh, 24px) clamp(22px, 2.6vw, 36px);">
+            <div class="card-title" style="font-size: clamp(1.08rem, 1.42vw, 1.3rem); margin-bottom: 10px; border-bottom: 2px solid var(--gold-light); padding-bottom: 5px;">
+              EURÍPIDES (480-406 a.C.)
+            </div>
+            <p style="font-size: clamp(0.8rem, 1.02vw, 0.93rem); line-height: 1.48; margin-bottom: 8px;">
+              Este autor se alejó de los principios ideológicos de sus predecesores para ocuparse de los <strong>problemas morales</strong> que se plantean en la vida cotidiana. No le interesan los conflictos a los que se enfrentan los grandes héroes, sino el <u>destino del hombre concreto</u>, acercándose a personajes humildes, como las mujeres o los esclavos. Es decir, mientras Sófocles presenta al hombre <em>como debe ser</em>, Eurípides lo muestra <em>como es</em> y sus personajes describen sus desgracias con un <strong>lenguaje contemporáneo</strong>, en términos humanos. Tal vez por ello sus representaciones no fueron tan del agrado del público de su época, más partidario de Sófocles.
+            </p>
+            <p style="font-size: clamp(0.8rem, 1.02vw, 0.93rem); line-height: 1.48; margin-bottom: 8px;">
+              Sus <strong>obras</strong>, cerca de noventa, de las que conservamos dieciocho enteras, tuvieron gran influencia en la literatura latina.
+            </p>
+            <p style="font-size: clamp(0.8rem, 1.02vw, 0.93rem); line-height: 1.48;">
+              La tragedia se desata por el orgullo y la soberbia del protagonista, que rebasa los límites de su condición humana. Su <strong>ceguera moral</strong> le impulsa al error, que trae consigo la <strong>desgracia</strong> y el <strong>castigo fatal</strong> de los dioses: la sangre derramada se vuelve contra los derramadores, el tirano es sometido, el impío atropellado y la fría razón sucumbe ante la locura. Así ocurre por ejemplo en <strong><em>Medea</em></strong>.
+            </p>
+          </div>
+        </div>
+        <div class="pane-image" style="flex: 0.42; max-width: 260px; max-height: 72%; align-self: center;" onclick="openLightbox('presentacion_recursos/busto_euripides.png')">
+          <img src="presentacion_recursos/busto_euripides.png" alt="Busto de Eurípides" style="max-height: 100%; object-fit: contain;">
+          <span class="zoom-hint">🔍 Ampliar Eurípides</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 28: Actividades 5 -->
+    <section class="slide" data-index="28" data-title="Actividades 5">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">Bloque 1.2 • Teatro Griego</span>
+          <h2 class="slide-title">ACTIVIDADES</h2>
+        </div>
+        <span class="slide-number">28 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="activity-container">
+          <div class="activity-img-box" onclick="openLightbox('presentacion_recursos/actividades_teatro.png')">
+            <img src="presentacion_recursos/actividades_teatro.png" alt="Cuaderno Actividades Teatro">
+          </div>
+          <div class="activity-info-box">
+            <span class="activity-badge">TAREA ACADÉMICA</span>
+            <div class="activity-task">
+              <h4>Actividades de Teatro Griego</h4>
+              <p><strong>Página 56:</strong> nº 20 (a, b, c, d), nº 24.</p>
+              <p style="margin-top:4px;"><strong>Página 57:</strong> nº 34 (a, b, c).</p>
+              <p style="margin-top:6px;"><strong>Actividades Teatro griego:</strong> material en <strong>Aules</strong>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 29: La Prosa Griega -->
+    <section class="slide" data-index="29" data-title="La Prosa Griega">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.2 Grecia • La Prosa</span>
+          <h2 class="slide-title">1.2 GRECIA. LA PROSA</h2>
+        </div>
+        <span class="slide-number">29 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="pane-text full-width" style="display: flex; flex-direction: column; height: 100%; gap: clamp(6px, 1vh, 10px);">
+          <div class="card" style="padding: clamp(8px, 1.2vh, 12px) clamp(14px, 1.5vw, 20px); flex-shrink: 0;">
+            <p style="margin-bottom: clamp(3px, 0.5vh, 5px); line-height: 1.45;">Los tres grandes géneros de la literatura griega clásica (épica, lírica y drama) utilizan el verso, ya que aparecen vinculados al canto y a la recitación.</p>
+            <p style="margin-bottom: 0; line-height: 1.45;">La <strong>prosa</strong> surge de la mano de géneros que suman a su vertiente estética la <strong>función didáctica</strong>.</p>
+          </div>
+          <div class="grid-3" style="flex: 1; min-height: 0; align-items: stretch;">
+            <!-- TARJETA 1: FÁBULAS -->
+            <div class="card" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; padding: clamp(12px, 1.6vh, 18px);">
+              <div>
+                <div class="card-title" style="margin-bottom: clamp(6px, 1vh, 10px); font-size: clamp(0.92rem, 1.1vw, 1.08rem);">Fábulas</div>
+                <p style="font-size: clamp(0.76rem, 0.92vw, 0.88rem); line-height: 1.52;">La creación de la fábula se atribuye a <strong>Esopo</strong> (s. VI a.C.). Como es sabido, se trata de relatos breves, protagonizados por animales dotados de capacidades humanas, de los que se desprende una enseñanza moral que se recoge al final del relato a modo de conclusión.</p>
+              </div>
+              <div style="margin-top: clamp(10px, 1.5vh, 16px); text-align: center; overflow: hidden; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.12); cursor: pointer; position: relative; border: 1px solid var(--border-color); background: #1a1412;" onclick="event.stopPropagation(); openLightbox('presentacion_recursos/fabula_esopo.jpg')">
+                <img src="presentacion_recursos/fabula_esopo.jpg" alt="Fábulas de Esopo: La zorra y las uvas en cerámica griega" style="width: 100%; height: clamp(220px, 34vh, 360px); object-fit: cover; object-position: center; display: block; transition: transform 0.25s ease;">
+                <div style="position: absolute; bottom: 6px; right: 8px; background: rgba(15,23,42,0.8); color: #fff; font-size: 0.65rem; padding: 2px 8px; border-radius: 4px; font-weight: 600; pointer-events: none; letter-spacing: 0.3px;">🔍 Fábulas de Esopo</div>
+              </div>
+            </div>
+
+            <!-- TARJETA 2: TRATADOS CIENTÍFICOS -->
+            <div class="card terracotta" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; padding: clamp(12px, 1.6vh, 18px);">
+              <div>
+                <div class="card-title" style="margin-bottom: clamp(6px, 1vh, 10px); font-size: clamp(0.92rem, 1.1vw, 1.08rem);">Tratados científicos</div>
+                <p style="font-size: clamp(0.76rem, 0.92vw, 0.88rem); line-height: 1.52;"><strong>Hipócrates</strong> (s. V a.C.), el padre de la medicina, redactó numerosos escritos (De la dieta, De las epidemias, Pronósticos, Aforismos), en los que describe la enfermedad como un desequilibrio entre los cuatro humores fundamentales: sangre, flema, bilis amarilla y bilis negra. Además, fundó una ética y una moral médicas, recogidas en el famoso <em>Juramento hipocrático</em>.</p>
+              </div>
+              <div style="margin-top: clamp(10px, 1.5vh, 16px); text-align: center; overflow: hidden; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.12); cursor: pointer; position: relative; border: 1px solid var(--border-color); background: #2b2622;" onclick="event.stopPropagation(); openLightbox('presentacion_recursos/hipocrates_medicina.jpg')">
+                <img src="presentacion_recursos/hipocrates_medicina.jpg" alt="Busto de Hipócrates de Cos, padre de la medicina" style="width: 100%; height: clamp(220px, 34vh, 360px); object-fit: cover; object-position: center 20%; display: block; transition: transform 0.25s ease;">
+                <div style="position: absolute; bottom: 6px; right: 8px; background: rgba(15,23,42,0.8); color: #fff; font-size: 0.65rem; padding: 2px 8px; border-radius: 4px; font-weight: 600; pointer-events: none; letter-spacing: 0.3px;">🔍 Hipócrates de Cos</div>
+              </div>
+            </div>
+
+            <!-- TARJETA 3: HISTORIA -->
+            <div class="card blue" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; padding: clamp(12px, 1.6vh, 18px);">
+              <div>
+                <div class="card-title" style="margin-bottom: clamp(6px, 1vh, 10px); font-size: clamp(0.92rem, 1.1vw, 1.08rem);">Historia</div>
+                <div style="display: flex; flex-direction: column; gap: clamp(5px, 0.7vh, 8px); font-size: clamp(0.72rem, 0.88vw, 0.84rem); line-height: 1.46;">
+                  <p><strong>Heródoto</strong> (484-420 a.C.) da cuenta de las guerras médicas entre griegos y persas en su obra <em>Historias</em>, en la que recoge el testimonio oral de los supervivientes.</p>
+                  <p><strong>Tucídides</strong> (460-399 a.C.) escribió la <em>Historia de la guerra del Peloponeso</em>, que libraron espartanos y atenienses. Trata de ofrecer distintas perspectivas incorporando discursos de personajes históricos implicados en los hechos.</p>
+                  <p><strong>Jenofonte</strong> (430-355 a.C.) es autor de la <em>Anábasis</em>, que cuenta la expedición de los griegos a tierras persas en auxilio del rey Ciro y su retirada.</p>
+                </div>
+              </div>
+              <div style="margin-top: clamp(10px, 1.5vh, 16px); text-align: center; overflow: hidden; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.12); cursor: pointer; position: relative; border: 1px solid var(--border-color); background: #1e2430;" onclick="event.stopPropagation(); openLightbox('presentacion_recursos/historia_herodoto.jpg')">
+                <img src="presentacion_recursos/historia_herodoto.jpg" alt="Busto de Heródoto de Halicarnaso, padre de la historia" style="width: 100%; height: clamp(220px, 34vh, 360px); object-fit: cover; object-position: center 20%; display: block; transition: transform 0.25s ease;">
+                <div style="position: absolute; bottom: 6px; right: 8px; background: rgba(15,23,42,0.8); color: #fff; font-size: 0.65rem; padding: 2px 8px; border-radius: 4px; font-weight: 600; pointer-events: none; letter-spacing: 0.3px;">🔍 Heródoto (Historia)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 30: La Prosa Filosófica -->
+    <section class="slide" data-index="30" data-title="La Prosa Filosófica">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.2 Grecia • La Prosa</span>
+          <h2 class="slide-title">1.2 GRECIA. LA PROSA: FILOSOFÍA</h2>
+        </div>
+        <span class="slide-number">30 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="pane-text">
+          <div class="card">
+            <div class="card-title">SÓCRATES (470-399 a.C.)</div>
+            <p>No es autor de ningún tratado, sino de un <strong>método: la mayéutica</strong>, basado en preguntas y diálogo. <em>«Solo sé que no sé nada»</em>. Su propósito no es definir la verdad sino estimular hacia su búsqueda por el debate.</p>
+          </div>
+          <div class="card blue">
+            <div class="card-title">PLATÓN (428-347 a.C.)</div>
+            <p>Discípulo de Sócrates, autor de veinticuatro diálogos en los que analiza la sociedad y la política (<em>República</em>, <em>Leyes</em>), la naturaleza espiritual del hombre (<em>Fedón</em>, <em>Fedro</em>) o el amor (<em>El banquete</em>).</p>
+          </div>
+          <div class="card terracotta">
+            <div class="card-title">ARISTÓTELES (384-322 a.C.)</div>
+            <p>Crea un sistema filosófico propio que integra la reflexión sobre la naturaleza de la realidad (<em>Física</em>), la moral (<em>Ética a Nicómaco</em>) y la estética (<em>Poética</em>).</p>
+          </div>
+        </div>
+        <div class="pane-image" onclick="openLightbox('presentacion_recursos/escuela_atenas.png')">
+          <img src="presentacion_recursos/escuela_atenas.png" alt="Platón y Aristóteles en Atenas">
+          <span class="zoom-hint">🔍 Ampliar Imagen</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 31: Actividades 6 -->
+    <section class="slide" data-index="31" data-title="Actividades 6">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">Bloque 1.2 • Prosa Griega</span>
+          <h2 class="slide-title">ACTIVIDADES</h2>
+        </div>
+        <span class="slide-number">31 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="activity-container">
+          <div class="activity-img-box" onclick="openLightbox('presentacion_recursos/actividades_prosa.png')">
+            <img src="presentacion_recursos/actividades_prosa.png" alt="Cuaderno Actividades Prosa">
+          </div>
+          <div class="activity-info-box">
+            <span class="activity-badge">TAREA ACADÉMICA</span>
+            <div class="activity-task">
+              <h4>Actividades de Prosa Griega</h4>
+              <p><strong>Página 59:</strong> nº 40 (enunciado modificado).</p>
+              <p style="margin-top:6px;"><strong>Página 59:</strong> nº 43.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 32: Contexto Histórico Roma -->
+    <section class="slide" data-index="32" data-title="Contexto Histórico: Roma">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.3 Contexto Histórico</span>
+          <h2 class="slide-title">1.3 CONTEXTO HISTÓRICO (ROMA)</h2>
+        </div>
+        <span class="slide-number">32 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="pane-text" style="flex: 1.35; justify-content: center; gap: clamp(8px, 1.4vh, 14px);">
+          <!-- CARD 1: CRONOLOGÍA -->
+          <div class="card" style="padding: clamp(12px, 1.6vh, 18px) clamp(16px, 1.8vw, 24px);">
+            <div class="card-title" style="margin-bottom: clamp(6px, 1vh, 10px); font-size: clamp(0.92rem, 1.08vw, 1.05rem);">Nos situamos cronológicamente...</div>
+            <ul class="diamond-bullets" style="display: flex; flex-direction: column; gap: clamp(4px, 0.7vh, 8px); font-size: clamp(0.74rem, 0.9vw, 0.86rem); line-height: 1.44;">
+              <li>Fundación de Roma &rarr; 753 a.C.</li>
+              <li>S. III a.C. &rarr; dominio de la península Itálica.</li>
+              <li>S. II a.C. &rarr; Ocupación de las regiones que bordeaban el Mediterráneo (<em>Mare Nostrum</em>)</li>
+              <li class="epic-sub"><strong>Guerras Púnicas</strong> (264-146 a.C.) &rarr; destrucción de Cartago.</li>
+              <li>S. I a.C. &rarr; Conquista de Occidente, parte del centro de Europa y el Asia Menor &gt; <strong>Imperio romano</strong>.</li>
+            </ul>
+          </div>
+
+          <!-- CARD 2: EL LEGADO DE ROMA -->
+          <div class="card terracotta" style="padding: clamp(12px, 1.6vh, 18px) clamp(16px, 1.8vw, 24px);">
+            <div class="card-title" style="margin-bottom: clamp(6px, 1vh, 10px); font-size: clamp(0.92rem, 1.08vw, 1.05rem);">El legado de Roma</div>
+            <p style="font-size: clamp(0.74rem, 0.9vw, 0.86rem); line-height: 1.44; margin-bottom: clamp(5px, 0.8vh, 8px);">Los romanos eran conscientes de que su prosperidad descansaba sobre <strong>dos pilares</strong>:</p>
+            <ul style="display: flex; flex-direction: column; gap: clamp(3px, 0.5vh, 6px); font-size: clamp(0.73rem, 0.88vw, 0.85rem); line-height: 1.42;">
+              <li>una <strong>administración centralizada</strong></li>
+              <li class="epic-sub">prevalencia del Derecho romano</li>
+              <li>y la <strong>unidad cultural</strong>:</li>
+              <li class="epic-sub">compleja red de calzadas</li>
+              <li class="epic-sub">imposición del latín</li>
+            </ul>
+            <p style="font-size: clamp(0.71rem, 0.86vw, 0.83rem); line-height: 1.44; margin-top: clamp(8px, 1.1vh, 12px); margin-bottom: 0;">La <strong>organización política y social</strong> de Roma se prolongó hasta el año <strong>476 d.C.</strong>, cuando los pueblos bárbaros provocaron la caída del Imperio. No obstante, su prestigio siguió gravitando sobre Europa, cuyas naciones asumieron su cultura y sus valores.</p>
+          </div>
+        </div>
+        <div class="pane-image" style="flex: 0.95; max-width: 580px; align-self: center;" onclick="openLightbox('presentacion_recursos/roma_cronologia.png')">
+          <img src="presentacion_recursos/roma_cronologia.png" alt="Imperio romano a la muerte de Trajano (117 d.C.)" style="width: 100%; height: auto; max-height: 75vh; object-fit: contain;">
+          <span class="zoom-hint">🔍 Ampliar Mapa</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 33: Periodos y Épocas: Roma -->
+    <section class="slide" data-index="33" data-title="Periodos y Épocas: Roma">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.3 Contexto Histórico (Roma)</span>
+          <h2 class="slide-title">1.3 CONTEXTO HISTÓRICO (ROMA): ÉPOCAS LITERARIAS</h2>
+        </div>
+        <span class="slide-number">33 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="pane-text" style="flex: 1.75; justify-content: center; gap: clamp(10px, 1.6vh, 16px);">
+          <!-- CARD 1: ASPECTOS GENERALES -->
+          <div class="card" style="padding: clamp(14px, 2vh, 22px) clamp(18px, 2vw, 28px);">
+            <div class="card-title" style="margin-bottom: clamp(8px, 1.2vh, 12px); font-size: clamp(0.95rem, 1.15vw, 1.12rem);">Aspectos generales</div>
+            <p style="font-size: clamp(0.78rem, 0.95vw, 0.92rem); line-height: 1.5; margin-bottom: clamp(6px, 1vh, 10px);">La historia del Imperio Romano se divide tradicionalmente en tres grandes periodos:</p>
+            <ul style="display: flex; flex-direction: column; gap: clamp(4px, 0.7vh, 8px); font-size: clamp(0.76rem, 0.92vw, 0.9rem); line-height: 1.48;">
+              <li>la <strong>Monarquía Romana</strong> (753-509 a.C.)</li>
+              <li>la <strong>República Romana</strong> (509-27 a.C.)</li>
+              <li>y el <strong>Imperio Romano</strong> (27 a.C. - 476 d.C.).</li>
+            </ul>
+          </div>
+
+          <!-- CARD 2: ÉPOCAS LITERARIAS -->
+          <div class="card terracotta" style="padding: clamp(14px, 2vh, 22px) clamp(18px, 2vw, 28px);">
+            <div class="card-title" style="margin-bottom: clamp(8px, 1.2vh, 12px); font-size: clamp(0.95rem, 1.15vw, 1.12rem);">Épocas literarias</div>
+            <p style="font-size: clamp(0.78rem, 0.95vw, 0.92rem); line-height: 1.5; margin-bottom: clamp(8px, 1.1vh, 12px);">Teniendo en cuenta que, del periodo de la Monarquía romana, previo a los siguientes, no se conservan manifestaciones escritas, distinguimos <strong>tres épocas literarias</strong>:</p>
+            <ul style="display: flex; flex-direction: column; gap: clamp(5px, 0.8vh, 9px); font-size: clamp(0.75rem, 0.9vw, 0.88rem); line-height: 1.46;">
+              <li><strong>Republicana (s. III-I a.C.)</strong>: imitación de la literatura griega, que tenía una mayor tradición y gran prestigio.</li>
+              <li><strong>Imperial (s. I-III d.C.)</strong>: periodo de mayor esplendor caracterizado por una gran perfección técnica y cierta pérdida de libertad creadora.</li>
+              <li><strong>Paleocristiana (s. IV-V d.C.)</strong>: marcada por la inclusión de contenidos religiosos.</li>
+            </ul>
+            <p style="font-size: clamp(0.74rem, 0.89vw, 0.86rem); line-height: 1.48; margin-top: clamp(10px, 1.3vh, 14px); margin-bottom: 0;">Tras la desaparición del Imperio romano, el latín continuará siendo la lengua culta por excelencia hasta el final de la Edad Media (s. XV).</p>
+          </div>
+        </div>
+
+        <div class="pane-image" style="flex: 0.48; max-width: 340px; align-self: center;" onclick="openLightbox('presentacion_recursos/roma_periodos.png')">
+          <img src="presentacion_recursos/roma_periodos.png" alt="Virgilio leyendo la Eneida ante Augusto y Octavia" style="width: 100%; height: auto; max-height: 60vh; object-fit: contain; border-radius: 8px;">
+          <span class="zoom-hint">🔍 Ampliar Imagen</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 34: La Poesía Épica Romana -->
+    <section class="slide" data-index="34" data-title="La Poesía Épica Romana">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.4 Roma • La Poesía Épica</span>
+          <h2 class="slide-title">1.4 ROMA. LA POESÍA ÉPICA</h2>
+        </div>
+        <span class="slide-number">34 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="pane-text">
+          <div class="card">
+            <div class="card-title">Inicios y Periodos Creativos</div>
+            <p><strong>Primer poema épico:</strong> <em>Odussia</em> (traducción de la <em>Odisea</em>) por <strong>Livio Andrónico</strong>.</p>
+            <ul>
+              <li><strong>Fase de imitación:</strong> Nevio con <em>Bellum Poenicum</em> (guerras púnicas y Eneas); Ennio con los <em>Anales</em> (adopta el verso <strong>hexámetro</strong> definitivo).</li>
+              <li><strong>Época clásica:</strong> cumbre con la <em>Eneida</em> de Virgilio, epopeya nacional y origen divino de Roma.</li>
+              <li><strong>Decadencia retórica:</strong> <em>Farsalia</em> del cordobés Lucano (guerra civil César vs Pompeyo).</li>
+            </ul>
+          </div>
+          <div class="card terracotta">
+            <div class="card-title">VIRGILIO: LA ENEIDA</div>
+            <p>Epopeya nacional y obra cumbre de la épica latina. Cuenta el origen mítico de Roma atribuido a <strong>Eneas</strong>, héroe troyano que huye de Troya y llega al Lacio.</p>
+            <p>Consta de <strong>XII libros</strong> con más de 12.000 versos. Publio Virgilio Marón (70-19 a.C.) la compuso entre 29 y 19 a.C. bajo protección de Augusto.</p>
+          </div>
+        </div>
+        <div class="pane-image" onclick="openLightbox('presentacion_recursos/roma_epica.png')">
+          <img src="presentacion_recursos/roma_epica.png" alt="Épica Romana">
+          <span class="zoom-hint">🔍 Ampliar Imagen</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 35: La Eneida: Objetivos y Estructura -->
+    <section class="slide" data-index="35" data-title="La Eneida: Objetivos y Estructura">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.4 Roma • La Poesía Épica</span>
+          <h2 class="slide-title">1.4 ROMA. LA POESÍA ÉPICA: LA ENEIDA</h2>
+        </div>
+        <span class="slide-number">35 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="pane-text full-width" style="display: flex; flex-direction: column; height: 100%; justify-content: space-between; gap: clamp(8px, 1.3vh, 14px);">
+          <!-- FILA SUPERIOR: OBJETIVOS + IMAGEN FRAGMENTO LA MUERTE DE PRÍAMO -->
+      <div class="slide-body" style="display: flex; flex-direction: column; gap: 0.9rem; height: calc(100% - 3.8rem); justify-content: space-between;">
+        
+        <!-- Fila superior: Objetivos e Imagen La Muerte de Príamo -->
+        <div style="display: grid; grid-template-columns: 1.75fr 1fr; gap: 1rem; flex: 1.25; min-height: 0;">
+          <div class="card blue" style="display: flex; flex-direction: column; justify-content: center; padding: 1.1rem 1.5rem;">
+            <h3 style="font-size: clamp(0.9rem, 1.15vw, 1.1rem); color: var(--color-blue); margin-bottom: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em;">OBJETIVOS</h3>
+            <ul class="bullet-list" style="font-size: clamp(0.82rem, 1.02vw, 0.95rem); line-height: 1.55; margin: 0; display: flex; flex-direction: column; gap: 0.5rem;">
+              <li>Por un lado, tiene un <strong>fondo histórico</strong>: se persigue la <u>glorificación de Roma</u> mediante la exaltación de sus valores y conquistas.</li>
+              <li>En segundo lugar, tiene un <strong>valor político</strong>, pues la epopeya <u>exalta la figura de Augusto</u> (subrayando su faceta humana y presentándolo como príncipe de la paz), su familia y otros personajes ilustres (el idilio entre Eneas y la reina Dido es trasunto del que mantuvieron Marco Antonio y Cleopatra).</li>
+              <li>Sin embargo, lo que convierte la Eneida en una obra universal es su <strong>emoción</strong>, su <strong>calidez</strong> y su <strong>humanidad</strong>, con escenas inolvidables: la muerte del anciano Príamo, que se viste con sus enmohecidas armas para defender Troya; la dramática salida de Eneas cargando con su anciano padre Anquises y la pérdida de su esposa, etc.</li>
+            </ul>
+          </div>
+          <div class="card" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0.5rem; background: #faf8f5; border: 1px solid var(--color-border); cursor: pointer; position: relative;" onclick="event.stopPropagation(); openLightbox('presentacion_recursos/muerte_priamo.png')" title="Haga clic para ampliar el texto">
+            <div style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+              <img src="presentacion_recursos/muerte_priamo.png" alt="La muerte de Príamo - Virgilio, La Eneida" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 6px; box-shadow: 0 3px 10px rgba(0,0,0,0.08); transition: transform 0.2s ease;">
+              <span style="position: absolute; bottom: 6px; right: 6px; background: rgba(30,41,59,0.85); color: #fff; font-size: 0.68rem; padding: 4px 9px; border-radius: 12px; pointer-events: none; display: flex; align-items: center; gap: 4px;">🔍 Clic para ampliar texto</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fila inferior: Estructura argumental -->
+        <div class="card terracotta" style="flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; padding: 1.1rem 1.5rem;">
+          <h3 style="font-size: clamp(0.9rem, 1.15vw, 1.1rem); color: var(--color-terracotta); margin-bottom: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em;">ESTRUCTURA ARGUMENTAL</h3>
+          <ul class="bullet-list" style="font-size: clamp(0.82rem, 1.02vw, 0.95rem); line-height: 1.55; margin: 0 0 0.6rem 0; display: flex; flex-direction: column; gap: 0.4rem;">
+            <li><strong>Viaje hasta Italia</strong> (libros I-VI): narra los viajes de Eneas y sus peripecias hasta llegar a Italia (que nos recuerdan a la <em>Odisea</em>). Uno de los episodios más destacado es la historia de amor con la reina Dido de Cartago y la profecía de la Sibila, que une el destino del protagonista al origen de la grandeza de Roma.</li>
+            <li><strong>Conquista de la nueva patria</strong> (libros VII-XII): cuenta las guerras de Eneas en suelo itálico (reflejo de la <em>Ilíada</em>).</li>
+          </ul>
+          <p style="font-size: clamp(0.80rem, 0.98vw, 0.92rem); line-height: 1.5; color: var(--color-text-muted); margin: 0;">
+            Es importante destacar que la Eneida tiene una <u>intención patriótica y propagandística</u> y que fue compuesta por Virgilio a petición de Augusto, primer emperador romano, que quería emparentarse con los dioses y justificar así el poder divino del emperador.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 36: Actividades 7 -->
+    <section class="slide" data-index="36" data-title="Actividades 7">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">Bloque 1.4 • Épica Romana</span>
+          <h2 class="slide-title">ACTIVIDADES</h2>
+        </div>
+        <span class="slide-number">36 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="activity-container">
+          <div class="activity-img-box" onclick="openLightbox('presentacion_recursos/actividades_eneida.png')">
+            <img src="presentacion_recursos/actividades_eneida.png" alt="Cuaderno Actividades Eneida">
+          </div>
+          <div class="activity-info-box">
+            <span class="activity-badge">TAREA ACADÉMICA</span>
+            <div class="activity-task">
+              <h4>Actividades de Épica Latina</h4>
+              <p><strong>Página 64:</strong> nº 44 (apartados a, b, c).</p>
+              <p style="margin-top:6px;"><strong>Actividad complementaria:</strong> material en <strong>Aules</strong>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 37: La Poesía Lírica Romana -->
+    <section class="slide" data-index="37" data-title="La Poesía Lírica Romana">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.4 ROMA &bull; LA POESÍA LÍRICA</span>
+          <h2 class="slide-title">1.4 ROMA. LA POESÍA LÍRICA</h2>
+        </div>
+        <span class="slide-number">37 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="pane-text" style="flex: 1.65; justify-content: center; gap: clamp(16px, 2.4vh, 26px);">
+          <!-- BLOQUE 1: ORÍGENES Y TENDENCIAS -->
+          <div class="card" style="padding: clamp(18px, 2.4vh, 28px) clamp(22px, 2.2vw, 32px);">
+            <p style="margin-bottom: clamp(10px, 1.5vh, 16px); font-size: clamp(0.92rem, 1.18vw, 1.1rem); line-height: 1.62;">
+              Los orígenes de la poesía lírica latina son poco conocidos. Es a partir del <strong>siglo I a.C.</strong> cuando se tiene constancia de los primeros autores líricos, entre los que se pueden distinguir dos tendencias:
+            </p>
+            <ul style="display: flex; flex-direction: column; gap: clamp(9px, 1.3vh, 15px); font-size: clamp(0.9rem, 1.14vw, 1.06rem); line-height: 1.6; margin: 0; padding-left: 1.2rem;">
+              <li><strong>a) Poesía arcaizante</strong>: arraigada a la tradición literaria romana, esta tendencia es representada por <strong>Lucrecio</strong>, autor del poema didáctico <em>De la naturaleza</em>. Su estilo es bastante austero en cuanto a recursos formales.</li>
+              <li><strong>b) Poetas nuevos</strong>: se trata de una poesía inspirada en los modelos griegos, innovadora y muy elaborada desde el punto de vista estilístico. El autor más destacado de los <em>poetae novi</em>&nbsp;fue <strong>Catulo</strong>.</li>
+            </ul>
+          </div>
+
+          <!-- BLOQUE 2: ESPLENDOR CON AUGUSTO Y MECENAS -->
+          <div class="card terracotta" style="padding: clamp(18px, 2.4vh, 28px) clamp(22px, 2.2vw, 32px);">
+            <p style="font-size: clamp(0.9rem, 1.14vw, 1.06rem); line-height: 1.62; margin: 0;">
+              Con la desaparición de la República (27 a.C.) y el advenimiento del Imperio de Augusto, la poesía latina experimentó su periodo de máximo esplendor. Los poetas disfrutaron del favor tanto del emperador como de otros ricos protectores, como <u>Mecenas</u>, que fomentaron económicamente la creación de <u>círculos literarios</u>. En este ambiente protegido y bien remunerado se produjeron las mejores creaciones de la lírica latina, con las obras de <u>Virgilio</u>, <u>Horacio</u> y <strong><u>Ovidio</u></strong>. Estos autores, que supieron adoptar los mejores logros tanto de los moldes griegos como de los "poetas nuevos", ejercieron una influencia fundamental en la literatura de épocas posteriores.
+            </p>
+          </div>
+        </div>
+
+        <div class="pane-image" style="flex: 0.58; max-width: 360px; align-self: center; padding: 8px;" onclick="openLightbox('presentacion_recursos/roma_lirica.png')">
+          <img src="presentacion_recursos/roma_lirica.png" alt="Lírica Romana" style="width: 100%; height: auto; max-height: clamp(260px, 62vh, 510px); object-fit: contain; border-radius: 8px; box-shadow: var(--shadow-sm);">
+          <span class="zoom-hint">🔍 Ampliar imagen</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 38: Catulo -->
+    <section class="slide" data-index="38" data-title="Catulo">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.4 ROMA &bull; LA POESÍA LÍRICA</span>
+          <h2 class="slide-title">1.4 ROMA. LA POESÍA LÍRICA</h2>
+        </div>
+        <span class="slide-number">38 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="pane-text" style="flex: 1.7; justify-content: center; gap: clamp(14px, 2.2vh, 22px);">
+          <!-- CARD 1: FIGURA Y OBRA -->
+          <div class="card blue" style="padding: clamp(16px, 2.2vh, 24px) clamp(20px, 2vw, 28px);">
+            <div class="card-title" style="font-size: clamp(0.95rem, 1.2vw, 1.12rem); color: var(--color-blue); margin-bottom: clamp(8px, 1.2vh, 12px);">CATULO (87-54 A.C.)</div>
+            <p style="font-size: clamp(0.85rem, 1.08vw, 1rem); line-height: 1.56; margin-bottom: clamp(8px, 1.1vh, 12px);">
+              Cayo Valerio Catulo es el <strong>principal representante de la lírica amorosa</strong>. La musa que le inspira es la hermosa <u>Clodia</u>, una dama romana de vida poco ejemplar a la que cantó bajo el nombre de Lesbia.
+            </p>
+            <p style="font-size: clamp(0.85rem, 1.08vw, 1rem); line-height: 1.56; margin: 0;">
+              Su <u>obra</u> abarca ciento dieciséis poemas, dividido en tres partes: <em>bagatelas, poemas doctos y epigramas satíricos</em>, en los que trata temas de la vida cotidiana y de la mitología.
+            </p>
+          </div>
+
+          <!-- CARD 2: DOS NOVEDADES -->
+          <div class="card terracotta" style="padding: clamp(16px, 2.2vh, 24px) clamp(20px, 2vw, 28px);">
+            <p style="font-size: clamp(0.85rem, 1.08vw, 1rem); line-height: 1.56; margin-bottom: clamp(8px, 1.1vh, 12px); font-weight: 600; color: var(--color-terracotta);">
+              La poesía de Catulo ofrece dos novedades:
+            </p>
+            <ul style="display: flex; flex-direction: column; gap: clamp(8px, 1.1vh, 12px); font-size: clamp(0.83rem, 1.04vw, 0.97rem); line-height: 1.52; margin: 0; padding-left: 1.2rem;">
+              <li>Una mezcla de elementos cultos y populares, con un abundante uso de diminutivos.</li>
+              <li>Una presentación innovadora del amor, pues, frente a la tradición romana que solo admitía como elementos de creación la piedad filial, los deberes de los esposos y el respeto mutuo, pero ocultaba el amor carnal como inconfesable, surgen ahora la pasión amorosa, el deseo o la satisfacción como lazos de unión poética entre dos personas.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pane-image" style="flex: 0.52; max-width: 340px; align-self: center; padding: 6px;" onclick="openLightbox('presentacion_recursos/catulo_lesbia.png')" title="Clic para ampliar el poema">
+          <img src="presentacion_recursos/catulo_lesbia.png" alt="Vivamos, querida Lesbia - Poema de Catulo" style="width: 100%; height: auto; max-height: clamp(260px, 62vh, 520px); object-fit: contain; border-radius: 12px; box-shadow: var(--shadow-sm);">
+          <span class="zoom-hint">🔍 Ampliar poema</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 39: Ovidio -->
+    <section class="slide" data-index="39" data-title="Ovidio">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.4 ROMA &bull; LA POESÍA LÍRICA</span>
+          <h2 class="slide-title">1.4 ROMA. LA POESÍA LÍRICA</h2>
+        </div>
+        <span class="slide-number">39 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="pane-text" style="flex: 1.72; justify-content: center; gap: clamp(12px, 1.8vh, 18px);">
+          <!-- CARD 1: OVIDIO - JUVENTUD Y DESTIERRO -->
+          <div class="card blue" style="padding: clamp(14px, 2vh, 22px) clamp(20px, 2vw, 28px);">
+            <div class="card-title" style="font-size: clamp(0.95rem, 1.2vw, 1.12rem); color: var(--color-blue); margin-bottom: clamp(6px, 1vh, 10px);">OVIDIO (43 A.C.- 17 D.C.)</div>
+            <p style="font-size: clamp(0.83rem, 1.02vw, 0.96rem); line-height: 1.52; margin-bottom: clamp(6px, 0.9vh, 9px);">
+              Los poemas de Publio Ovidio Nasón están marcados por su etapa de destierro, en el año 8 a.C. por orden del emperador Augusto.
+            </p>
+            <p style="font-size: clamp(0.83rem, 1.02vw, 0.96rem); line-height: 1.52; margin-bottom: clamp(5px, 0.7vh, 8px);">
+              En su juventud escribe tres obras:
+            </p>
+            <ul style="display: flex; flex-direction: column; gap: clamp(5px, 0.8vh, 8px); font-size: clamp(0.81rem, 0.98vw, 0.93rem); line-height: 1.48; margin: 0 0 clamp(8px, 1.1vh, 10px) 0; padding-left: 1.2rem;">
+              <li><em>Los amores</em>, tres libros dirigidos a una imaginada amada Corina.</li>
+              <li><em>Las heroidas</em>, diecisiete cartas de amor de heroínas mitológicas a sus maridos o amantes.</li>
+              <li><em>Ars amandi</em>, un tratado didáctico de estrategias amorosas dirigidas a los hombres para aleccionarles sobre la manera de conquistar y retener el favor de las mujeres (en dos libros), y un tercer libro dirigido a las mujeres en el que se les da consejos sobre el arte de seducir a los hombres. Se trata de una obra que escandalizó en su época, pero que fue muy leída e imitada en la Edad Media.</li>
+            </ul>
+            <p style="font-size: clamp(0.81rem, 0.98vw, 0.93rem); line-height: 1.5; margin: 0;">
+              Frente a esos poemas amorosos, la época del destierro se muestra en <em>Tristezas</em>, obra de versos sinceros y profundos, donde expresa su amargura y su dolor, e intenta justificar errores pasados.
+            </p>
+          </div>
+
+          <!-- CARD 2: METAMORFOSIS -->
+          <div class="card terracotta" style="padding: clamp(14px, 2vh, 22px) clamp(20px, 2vw, 28px);">
+            <p style="font-size: clamp(0.83rem, 1.02vw, 0.96rem); line-height: 1.52; margin: 0;">
+              Su gran obra es las <strong><em>Metamorfosis</em></strong>, un tratado didáctico de mitología con una enorme influencia en la cultura occidental, ya que ha sido una fuente de continua inspiración para escritores, pintores, escultores y músicos. En él, Ovidio organiza materiales mitológicos variados, que se ligan por el fenómeno común de la metamorfosis, esto es, de la transformación física en otro ser. La variedad de historias es inmensa y, por ello, posee la obra un cierto carácter enciclopédico.
+            </p>
+          </div>
+        </div>
+
+        <div class="pane-image" style="flex: 0.5; max-width: 320px; align-self: center; padding: 6px;" onclick="openLightbox('presentacion_recursos/ovidio.png')" title="Clic para ampliar imagen">
+          <img src="presentacion_recursos/ovidio.png" alt="Publio Ovidio Nasón" style="width: 100%; height: auto; max-height: clamp(260px, 62vh, 520px); object-fit: contain; border-radius: 12px; box-shadow: var(--shadow-sm);">
+          <span class="zoom-hint">🔍 Ampliar imagen</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 40: Actividades 8 -->
+    <section class="slide" data-index="40" data-title="Actividades 8">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">Bloque 1.4 • Lírica Romana</span>
+          <h2 class="slide-title">ACTIVIDADES</h2>
+        </div>
+        <span class="slide-number">40 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="activity-container">
+          <div class="activity-img-box" onclick="openLightbox('presentacion_recursos/actividades_lirica_roma.png')">
+            <img src="presentacion_recursos/actividades_lirica_roma.png" alt="Cuaderno Actividades Lírica Romana">
+          </div>
+          <div class="activity-info-box">
+            <span class="activity-badge">TAREA ACADÉMICA</span>
+            <div class="activity-task">
+              <h4>Actividades de Lírica Romana</h4>
+              <p><strong>Página 65:</strong> nº 57 (apartados a, b).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 41: El Teatro Latino: Plauto -->
+    <section class="slide" data-index="41" data-title="El Teatro Latino: Plauto">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.4 ROMA &bull; EL TEATRO LATINO</span>
+          <h2 class="slide-title">1.4 ROMA. EL TEATRO LATINO</h2>
+        </div>
+        <span class="slide-number">41 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="pane-text" style="flex: 1.74; justify-content: center; gap: clamp(10px, 1.5vh, 16px);">
+          <!-- CARD 1: ORIGEN DEL TEATRO POPULAR -->
+          <div class="card blue" style="padding: clamp(12px, 1.8vh, 20px) clamp(18px, 2vw, 26px);">
+            <p style="font-size: clamp(0.81rem, 1vw, 0.94rem); line-height: 1.5; margin-bottom: clamp(6px, 0.9vh, 9px);">
+              Las primeras manifestaciones de <strong>teatro popular</strong>, no escrito, están ligadas a la <u>recogida de las cosechas</u> y a <u>fiestas campesinas</u> en honor a la diosa Ceres. Consistían en diálogos en verso en tono de farsa, con <u>tipos fijos</u> como el fanfarrón, el pedante, el viejo ridículo, el tonto o el glotón, cuya evolución se puede seguir a lo largo de los siglos hasta llegar a la <em>Commedia dell'Arte</em> italiana del siglo XVI.
+            </p>
+            <p style="font-size: clamp(0.81rem, 1vw, 0.94rem); line-height: 1.5; margin: 0;">
+              Los principales autores de comedia son <strong>Plauto</strong> y <strong>Terencio</strong>.
+            </p>
+          </div>
+
+          <!-- CARD 2: PLAUTO -->
+          <div class="card terracotta" style="padding: clamp(12px, 1.8vh, 20px) clamp(18px, 2vw, 26px);">
+            <div class="card-title" style="font-size: clamp(0.95rem, 1.2vw, 1.12rem); color: var(--color-terracotta); margin-bottom: clamp(6px, 0.9vh, 9px);">PLAUTO (254 - 184 A.C.)</div>
+            <ul style="display: flex; flex-direction: column; gap: clamp(5px, 0.8vh, 8px); font-size: clamp(0.78rem, 0.96vw, 0.9rem); line-height: 1.46; margin: 0; padding-left: 1.2rem;">
+              <li><strong>Estilo y lenguaje:</strong> Buscaba el humor a través de la <strong>exageración y la caricatura</strong>, recurriendo al <strong>latín vulgar</strong> (<em>sermo vulgaris</em>) para conectar con el público popular.</li>
+              <li><strong>Trama habitual:</strong> Parejas de jóvenes enamorados que logran superar sus obstáculos con la ayuda de un <strong>esclavo astuto</strong>.</li>
+              <li><strong>Personajes:</strong> Utilizaba tipos fijos fácilmente reconocibles por el público:
+                <ul style="margin: 3px 0 3px 0; padding-left: 1.3rem; display: flex; flex-direction: column; gap: 2px;">
+                  <li><strong>Simpáticos:</strong> Los jóvenes y el esclavo.</li>
+                  <li><strong>Antipáticos:</strong> El anciano tacaño, el soldado bravucón y el mercader codicioso.</li>
+                </ul>
+              </li>
+              <li><strong>Crítica social:</strong> Al hacer que los personajes antipáticos terminaran burlados o apaleados, ejercía una crítica hacia las clases acomodadas.</li>
+              <li><strong>Obra:</strong> Escribió unas cien comedias, de las que se conservan alrededor de <strong>veinte</strong>.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pane-image" style="flex: 0.48; max-width: 295px; align-self: center; padding: 6px;" onclick="openLightbox('presentacion_recursos/teatro_latino_plauto.png')" title="Clic para ampliar imagen">
+          <img src="presentacion_recursos/teatro_latino_plauto.png" alt="Plauto - Comedia Latina" style="width: 100%; height: auto; max-height: clamp(250px, 60vh, 500px); object-fit: contain; border-radius: 12px; box-shadow: var(--shadow-sm);">
+          <span class="zoom-hint">🔍 Ampliar imagen</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 42: Terencio y Séneca -->
+    <section class="slide" data-index="42" data-title="Terencio y Séneca">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.4 ROMA &bull; EL TEATRO LATINO</span>
+          <h2 class="slide-title">1.4 ROMA. EL TEATRO LATINO</h2>
+        </div>
+        <span class="slide-number">42 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="pane-text" style="flex: 1.74; justify-content: center; gap: clamp(10px, 1.5vh, 16px);">
+          <!-- CARD 1: TERENCIO -->
+          <div class="card blue" style="padding: clamp(12px, 1.8vh, 20px) clamp(18px, 2vw, 26px);">
+            <div class="card-title" style="font-size: clamp(0.95rem, 1.2vw, 1.12rem); color: var(--color-blue); margin-bottom: clamp(6px, 0.9vh, 9px);">TERENCIO (185 - 159 A.C.)</div>
+            <ul style="display: flex; flex-direction: column; gap: clamp(5px, 0.8vh, 8px); font-size: clamp(0.79rem, 0.98vw, 0.92rem); line-height: 1.5; margin: 0; padding-left: 1.2rem;">
+              <li><strong>Estilo y lenguaje:</strong> Escribía para un público culto (<em>romanos cultos</em>), empleando un <strong>latín cuidado</strong> (<em>sermo nobilis</em>) y ofreciendo un teatro más <strong>refinado, reflexivo y moralizante</strong>.</li>
+              <li><strong>Trama y personajes:</strong> Aunque abordaba temas similares a los de Plauto, dotaba a sus personajes de una <strong>mayor profundidad psicológica</strong>.</li>
+              <li><strong>Obra:</strong> Se conservan <strong>seis</strong> de sus comedias.</li>
+            </ul>
+          </div>
+
+          <!-- CARD 2: TRAGEDIA LATINA Y SÉNECA -->
+          <div class="card terracotta" style="padding: clamp(12px, 1.8vh, 20px) clamp(18px, 2vw, 26px);">
+            <p style="font-size: clamp(0.77rem, 0.94vw, 0.89rem); line-height: 1.48; margin-bottom: clamp(6px, 0.9vh, 9px);">
+              En cuanto a la <strong>tragedia latina</strong>, tiene un desarrollo tardío. La <u>época arcaica</u> (S.VI-I a.C.), se limita a adaptar tragedias griegas.
+            </p>
+            <p style="font-size: clamp(0.77rem, 0.94vw, 0.89rem); line-height: 1.48; margin: 0;">
+              Ya en <u>época imperial</u>, el cordobés <strong>LUCIO ANNEO SÉNECA (4-65 D.C.)</strong>, escribe nueve tragedias originales, entre las que destacan <em>Fedra</em>, <em>Medea</em> y <em>Edipo</em>, de contenido filosófico, más para la lectura que para su representación, las cuales tuvieron una notable influencia en el teatro inglés y en dramaturgos modernos. A diferencia de la tragedia griega, cuyo héroe lucha contra un destino inexorable que acaba destruyéndolo, <u>Séneca se centra en el dolor que causa el ser humano cuando actúa mal</u>. Teniendo en cuenta que escribió sus obras mientras era preceptor y ministro puede que las escribiera para educar moral y políticamente, a este excéntrico emperador, que adoraba el teatro.
+            </p>
+          </div>
+        </div>
+
+        <div class="pane-image" style="flex: 0.46; max-width: 275px; align-self: center; padding: 6px;" onclick="openLightbox('presentacion_recursos/terencio_seneca.jpg')" title="Clic para ampliar imagen">
+          <img src="presentacion_recursos/terencio_seneca.jpg" alt="Estatua de Séneca en Córdoba" style="width: 100%; height: auto; max-height: clamp(250px, 62vh, 520px); object-fit: contain; border-radius: 12px; box-shadow: var(--shadow-sm);">
+          <span class="zoom-hint">🔍 Ampliar imagen</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 43: La Prosa Latina: Historia -->
+    <section class="slide" data-index="43" data-title="La Prosa Latina: Historia">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">1.4 ROMA &bull; LA PROSA LATINA</span>
+          <h2 class="slide-title">1.4 ROMA. LA PROSA LATINA</h2>
+        </div>
+        <span class="slide-number">43 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="pane-text" style="flex: 1.72; justify-content: center; gap: clamp(10px, 1.5vh, 16px);">
+          <!-- CARD 1: GÉNEROS EN PROSA -->
+          <div class="card" style="padding: clamp(10px, 1.4vh, 16px) clamp(18px, 2vw, 26px);">
+            <p style="font-size: clamp(0.85rem, 1.06vw, 0.98rem); line-height: 1.5; margin: 0;">
+              Los géneros en prosa más importantes son la <u>historia</u>, la <u>oratoria</u>, el <u>pensamiento</u> y la <u>novela</u>.
+            </p>
+          </div>
+
+          <!-- CARD 2: HISTORIA Y AUTORES -->
+          <div class="card terracotta" style="padding: clamp(14px, 1.8vh, 22px) clamp(18px, 2vw, 26px);">
+            <div class="card-title" style="font-size: clamp(0.95rem, 1.2vw, 1.12rem); color: var(--color-terracotta); margin-bottom: clamp(6px, 1vh, 10px);">HISTORIA</div>
+            <p style="font-size: clamp(0.79rem, 0.98vw, 0.92rem); line-height: 1.5; margin-bottom: clamp(8px, 1.1vh, 12px);">
+              En Roma, el género histórico supera el ámbito literario para internarse en el <u>político</u> y <u>propagandístico</u>. Las campañas militares, las decisiones de gobierno y la agitación social se apoyaban en él. La selección de los hechos, así como su presentación y valoración, tienen como <u>objetivo influir en la opinión del lector</u>.
+            </p>
+            <ul style="display: flex; flex-direction: column; gap: clamp(6px, 0.9vh, 10px); font-size: clamp(0.78rem, 0.96vw, 0.91rem); line-height: 1.46; margin: 0; padding-left: 1.2rem;">
+              <li><strong>Julio César</strong> (101-44 a.C.), autor de <em>Comentarios a la guerra civil</em>&nbsp;y <em>Comentarios a la guerra de las Galias</em>, una <u>autobiografía</u> redactada en tercera persona en la que defiende las decisiones que tomó en estos dos conflictos.</li>
+              <li><strong>Salustio</strong> (87-35 a.C.), cuyas obras, <em>La conjuración de Catilina</em>&nbsp;y <em>La guerra de Yugurta</em>, se caracterizan por su intención moralizante y el análisis psicológico de los protagonistas.</li>
+              <li><strong>Tito Livio</strong> (59 a.C.-17 d.C.), autor de la patriótica y monumental <em>Ab urbe condita</em> (Historia de Roma desde su fundación), compuesta de 142 libros.</li>
+              <li><strong>Tácito</strong> (55-120 d.C.), que recoge con rigor la historia del siglo I en dos obras fragmentarias, <em>Anales e Historia</em>.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pane-image" style="flex: 0.5; max-width: 305px; align-self: center; padding: 6px;" onclick="openLightbox('presentacion_recursos/julio_cesar.jpg')" title="Clic para ampliar imagen">
+          <img src="presentacion_recursos/julio_cesar.jpg" alt="Julio César - Historiador romano" style="width: 100%; height: auto; max-height: clamp(250px, 60vh, 500px); object-fit: contain; border-radius: 12px; box-shadow: var(--shadow-sm);">
+          <span class="zoom-hint">🔍 Ampliar imagen</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 44: Actividades 9 y Cierre -->
+    <section class="slide" data-index="44" data-title="Actividades 9">
+      <div class="slide-header">
+        <div class="header-left">
+          <span class="slide-category">Bloque 1.4 • Prosa Latina</span>
+          <h2 class="slide-title">ACTIVIDADES</h2>
+        </div>
+        <span class="slide-number">44 / 44</span>
+      </div>
+      <div class="slide-body">
+        <div class="activity-container">
+          <div class="activity-img-box" onclick="openLightbox('presentacion_recursos/actividades_prosa_roma.png')">
+            <img src="presentacion_recursos/actividades_prosa_roma.png" alt="Cuaderno Actividades Prosa Latina">
+          </div>
+          <div class="activity-info-box">
+            <span class="activity-badge">TAREA ACADÉMICA</span>
+            <div class="activity-task">
+              <h4>Actividades de Prosa Latina</h4>
+              <p><strong>Página 68:</strong> nº 64.</p>
+              <p style="margin-top:4px;"><strong>Página 68:</strong> nº 74 (apartados a, b, c, d).</p>
+              <p style="margin-top:12px; font-weight:bold; color:var(--primary); font-size:1.05rem;">🎉 ¡Enhorabuena! Has completado la Unidad 1: Literatura Clásica.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- End presentation container -->
+
+  <!-- BOTTOM NAVIGATION BAR -->
+  <nav class="bottom-bar">
+    <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+    <div class="nav-controls">
+      <button class="nav-btn" id="prevBtn" onclick="prevSlide()" title="Anterior (←)">‹</button>
+      <span class="indicator" id="slideIndicator">Cita Inicial</span>
+      <button class="nav-btn" id="nextBtn" onclick="nextSlide()" title="Siguiente (→)">›</button>
+    </div>
+    <div class="aux-controls">
+      <button class="aux-btn" onclick="toggleDrawer()" title="Índice de Diapositivas">📑 Índice</button>
+      <button class="aux-btn" onclick="toggleFullscreen()" title="Pantalla Completa (F)">⛶ Pantalla Completa</button>
+    </div>
+  </nav>
+
+  <!-- DRAWER / INDEX MODAL -->
+  <div class="modal-overlay" id="modalOverlay" onclick="toggleDrawer()">
+    <div class="index-drawer" onclick="event.stopPropagation()">
+      <div class="drawer-header">
+        <h3>Índice General de Diapositivas</h3>
+        <button class="drawer-close" onclick="toggleDrawer()">×</button>
+      </div>
+      <div class="drawer-body" id="drawerBody"></div>
+    </div>
+  </div>
+
+  <!-- IMAGE LIGHTBOX -->
+  <div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
+    <span class="lightbox-close" onclick="closeLightbox()">×</span>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="Imagen ampliada">
+  </div>
+
+  <!-- CARD EXPANSION MODAL -->
+  <div class="card-modal-overlay" id="cardModalOverlay" onclick="closeCardModal(event)">
+    <div class="card-modal-container" id="cardModalContainer">
+      <button class="card-modal-close" onclick="closeCardModal(event)" title="Cerrar (Esc)">×</button>
+      <div class="card-modal-content" id="cardModalContent"></div>
+      <div class="card-modal-footer">Haz clic fuera o pulsa Esc para cerrar</div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT ENGINE -->
+  <script>
+    let currentIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const progressBar = document.getElementById('progressBar');
+    const slideIndicator = document.getElementById('slideIndicator');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const drawerBody = document.getElementById('drawerBody');
+    const modalOverlay = document.getElementById('modalOverlay');
+
+    // Populate drawer items
+    slides.forEach((slide, idx) => {
+      const item = document.createElement('div');
+      item.className = 'drawer-item';
+      const title = slide.dataset.title || 'Diapositiva ' + idx;
+      const numLabel = idx === 0 ? '★' : (idx < 10 ? '0' + idx : idx);
+      item.innerHTML = `<span class="item-num">${numLabel}</span> <span>${title}</span>`;
+      item.onclick = () => { goToSlide(idx); toggleDrawer(); };
+      drawerBody.appendChild(item);
+    });
+
+    function checkHash() {
+      const hash = window.location.hash;
+      if (hash && hash.startsWith('#slide-')) {
+        const num = parseInt(hash.replace('#slide-', ''), 10);
+        if (!isNaN(num) && num >= 0 && num < totalSlides) {
+          currentIndex = num;
+        }
+      }
+    }
+    checkHash();
+
+    function updateView(updateHash = true) {
+      slides.forEach((s, idx) => {
+        s.classList.toggle('active', idx === currentIndex);
+      });
+      const pct = (currentIndex / (totalSlides - 1)) * 100;
+      progressBar.style.width = pct + '%';
+      slideIndicator.textContent = currentIndex === 0 ? 'Cita Inicial' : `${currentIndex} / ${totalSlides - 1}`;
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === totalSlides - 1;
+      document.querySelectorAll('.drawer-item').forEach((it, idx) => {
+        it.classList.toggle('current', idx === currentIndex);
+      });
+      if (updateHash && window.location.hash !== `#slide-${currentIndex}`) {
+        history.replaceState(null, '', `#slide-${currentIndex}`);
+      }
+    }
+
+    window.addEventListener('hashchange', () => {
+      checkHash();
+      updateView(false);
+    });
+
+    function goToSlide(index) {
+      if (index >= 0 && index < totalSlides) {
+        currentIndex = index;
+        updateView();
+      }
+    }
+
+    function nextSlide() {
+      if (currentIndex < totalSlides - 1) {
+        currentIndex++;
+        updateView();
+      }
+    }
+
+    function prevSlide() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateView();
+      }
+    }
+
+    function toggleDrawer() {
+      modalOverlay.classList.toggle('active');
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => console.log(err));
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    function openLightbox(src) {
+      const lb = document.getElementById('lightboxOverlay');
+      const img = document.getElementById('lightboxImg');
+      img.src = src;
+      lb.classList.add('active');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightboxOverlay').classList.remove('active');
+    }
+
+    // Card modal functions
+    function openCardModal(cardElement) {
+      const modal = document.getElementById('cardModalOverlay');
+      const container = document.getElementById('cardModalContainer');
+      const content = document.getElementById('cardModalContent');
+      
+      container.className = 'card-modal-container';
+      if (cardElement.classList.contains('terracotta')) {
+        container.classList.add('terracotta');
+      } else if (cardElement.classList.contains('blue')) {
+        container.classList.add('blue');
+      } else if (cardElement.classList.contains('gold')) {
+        container.classList.add('gold');
+      }
+      
+      content.innerHTML = cardElement.innerHTML;
+      modal.classList.add('active');
+    }
+
+    function closeCardModal(e) {
+      if (e) {
+        if (e.target.closest('#cardModalContainer') && !e.target.closest('.card-modal-close')) {
+          return;
+        }
+      }
+      document.getElementById('cardModalOverlay').classList.remove('active');
+    }
+
+    // Delegated click handler for expandable cards, activities and tables
+    document.getElementById('presentationContainer').addEventListener('click', (e) => {
+      if (e.target.closest('button') || e.target.closest('video') || e.target.closest('a') || 
+          e.target.closest('.pane-image') || e.target.closest('.contents-bust-pane') || 
+          e.target.closest('.activity-img-box') || e.target.closest('.cover-img-pane') ||
+          e.target.closest('.c-head') || e.target.closest('.c-lvl1') || e.target.closest('.c-lvl2')) {
+        return;
+      }
+      const card = e.target.closest('.card, .activity-task, .comp-table-wrap');
+      if (card) {
+        openCardModal(card);
+      }
+    });
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+      if (modalOverlay.classList.contains('active')) {
+        if (e.key === 'Escape') toggleDrawer();
+        return;
+      }
+      if (document.getElementById('cardModalOverlay').classList.contains('active')) {
+        if (e.key === 'Escape') closeCardModal();
+        return;
+      }
+      if (document.getElementById('lightboxOverlay').classList.contains('active')) {
+        if (e.key === 'Escape') closeLightbox();
+        return;
+      }
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp' || e.key === 'Backspace') {
+        prevSlide();
+      } else if (e.key === 'Home') {
+        goToSlide(0);
+      } else if (e.key === 'End') {
+        goToSlide(totalSlides - 1);
+      } else if (e.key.toLowerCase() === 'f') {
+        toggleFullscreen();
+      } else if (e.key.toLowerCase() === 'm') {
+        toggleDrawer();
+      }
+    });
+
+    // Touch swipe gestures for mobile / tablet
+    let startX = 0;
+    let startY = 0;
+    window.addEventListener('touchstart', (e) => {
+      startX = e.changedTouches[0].screenX;
+      startY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    window.addEventListener('touchend', (e) => {
+      const diffX = e.changedTouches[0].screenX - startX;
+      const diffY = e.changedTouches[0].screenY - startY;
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 45) {
+        if (diffX < 0) nextSlide();
+        else prevSlide();
+      }
+    }, { passive: true });
+
+    updateView();
+  </script>
+</body>
+</html>
